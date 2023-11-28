@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 28, 2023 at 03:10 PM
+-- Generation Time: Nov 28, 2023 at 03:19 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -48,7 +48,8 @@ CREATE TABLE `movies` (
   `resume` text NOT NULL,
   `year` int(11) NOT NULL,
   `link_yt` text NOT NULL,
-  `image` text NOT NULL
+  `image` text NOT NULL,
+  `genre` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
