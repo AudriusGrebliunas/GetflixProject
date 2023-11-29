@@ -26,28 +26,23 @@
         function submitForm(event) {
             event.preventDefault();
 
-            // Get values from form
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
 
-            // Basic validation
             if (!email || !password) {
                 alert("Please enter both email and password.");
                 return;
             }
 
-            // Make a POST request using Axios
             axios.post('http://localhost/login.php', {
                 email: email,
                 password: password
             })
             .then(function (response) {
-                // Handle success, e.g., redirect to dashboard
                 console.log(response.data);
                 alert("Login successful!");
             })
             .catch(function (error) {
-                // Handle error, e.g., display an error message
                 console.error("Login failed:", error);
             }
             );

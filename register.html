@@ -44,7 +44,6 @@
         function submitForm(event) {
             event.preventDefault();
 
-            // Get values from form
             var first_name = document.getElementById("first_name").value;
             var last_name = document.getElementById("last_name").value;
             var address = document.getElementById("address").value;
@@ -53,13 +52,11 @@
             var password = document.getElementById("password").value;
 
 
-            // Basic validation
             if (!email || !password || !first_name || !last_name || !address || !dob || !email) {
                 alert("Your form is missing data");
                 return;
             }
 
-            // Make a POST request using Axios
             axios.post('http://localhost/register.php', {
                 email: email,
                 password: password,
@@ -69,12 +66,10 @@
                 dob: dob
             })
                 .then(function (response) {
-                    // Handle success, e.g., redirect to dashboard
                     console.log(response.data);
                     alert("Register successful!");
                 })
                 .catch(function (error) {
-                    // Handle error, e.g., display an error message
                     console.error("Register failed:", error);
                 }
                 );

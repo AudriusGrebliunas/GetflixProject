@@ -15,5 +15,5 @@ catch (Exception $e){
   echo $e->getMessage();
 }
 }
-connect();
+$db = connect();
 ?>
