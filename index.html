@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <form id="loginForm" onsubmit="submitForm(event)">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            // Get values from form
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            // Basic validation
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            // Make a POST request using Axios
+            axios.post('http://localhost/login.php', {
+                email: email,
+                password: password
+            })
+            .then(function (response) {
+                // Handle success, e.g., redirect to dashboard
+                console.log(response.data);
+                alert("Login successful!");
+            })
+            .catch(function (error) {
+                // Handle error, e.g., display an error message
+                console.error("Login failed:", error);
+                alert("Invalid email or password. Please try again.");
+            }
+            );
+        }
+    </script>
+
+</body>
+</html>
