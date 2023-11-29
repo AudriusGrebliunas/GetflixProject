@@ -17,8 +17,12 @@ servers:
 tags:
   - name: user
     description: Operations about user
+  - name: wishlist
+    description: >-
+      A wishlist of the user allowing him to put movies in three different
+      category : want to watch, ongoing, finished. 
 paths:
-  /register:
+  /user/register:
     post:
       tags:
         - user
@@ -47,32 +51,6 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/User'
-  /user/createWithList:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      description: Creates list of users with given input array
-      operationId: createUsersWithListInput
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: successful operation
   /user/login:
     get:
       tags:
@@ -96,37 +74,12 @@ paths:
       responses:
         '200':
           description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
           content:
-            application/xml:
-              schema:
-                type: string
             application/json:
               schema:
                 type: string
         '400':
           description: Invalid username/password supplied
-  /user/logout:
-    get:
-      tags:
-        - user
-      summary: Logs out current logged in user session
-      description: ''
-      operationId: logoutUser
-      parameters: []
-      responses:
-        default:
-          description: successful operation
   /user/{username}:
     get:
       tags:
@@ -201,6 +154,34 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
+  /wishlist/add/{username}/{moviename}:
+   post:
+    tags:
+        - wishlist
+    summary: Adding a movie to a selected category of the wishlist
+    description: >-
+      There's three possible value in "status" : 1 -> want to add, 2 -> ongoing,
+      3 -> finished
+    parameters:
+        - name: username
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: string
+        - name: moviename
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: string
+    responses:
+     '400': 
+      description: Film already added
+     '404': 
+       description: Movie not found
+     
+     
 components:
   schemas:
     User:
@@ -211,7 +192,7 @@ components:
           format: int64
           example: 10
         firstName:
-          type: string
+          type: string+
           example: John
         lastName:
           type: string
@@ -223,10 +204,10 @@ components:
           type: integer
           description: Date of Birth
           format: date
-          example: 2012-04-23T18:25:43.511Z
+          example: '2012-04-23T18:25:43.511Z'
         password:
           type: string
-          example: '12345%+de'
+          example: 12345%+de
       xml:
         name: user
     Tag:
