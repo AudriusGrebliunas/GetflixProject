@@ -8,11 +8,12 @@ $password="root";
 $dsn = "mysql:host=$hostname;dbname=$dbname";
 
 try {
-return $db = new PDO($dsn, $username, $password);
+  $db = new PDO($dsn, $username, $password);
+  return $db;
 }
 catch (Exception $e){
   echo $e->getMessage();
 }
 }
-
+connect();
 ?>
