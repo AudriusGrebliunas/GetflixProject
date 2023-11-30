@@ -31,11 +31,16 @@
                 return;
             }
 
-            axios.get('https://localhost/register.php', {
-                email: email
+            axios.get('http://localhost/userProfile.php', {
+                params: {
+                    email: email
+                }
             })
                 .then(function (response) {
-                    console.log(response.data);
+                    let userData = response.data;
+                    console.log(userData);
+                    console.log(response.status);
+                    console.log(response.data[0]);
                     alert("Return successful!");
                 })
                 .catch(function (error) {

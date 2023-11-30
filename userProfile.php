@@ -13,13 +13,11 @@ function createResponse($status, $message, $data = [])
     return json_encode($response);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if ($data) {
-        $email = isset($data['email']) ? $data['email'] : '';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['email'])) {
+        $email = $_GET['email'];
     }
-
-    if (empty($data["email"])) {
+    if (empty($email)) {
         echo createResponse('Error 401', 'Data missing');
         exit;
     }
@@ -35,3 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 }
+
