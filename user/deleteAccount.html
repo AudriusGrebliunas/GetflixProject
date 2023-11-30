@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <form id="emailForm" onsubmit="submitForm(event)">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
+            <button type="submit">Delete</button>
+        </div>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            var email = document.getElementById("email").value;
+
+            if (!email) {
+                alert("Your email is missing");
+                return;
+            }
+
+            axios.delete('http://localhost:8080/deleteAccount.php', {
+                data: {
+                    email: email
+                }
+            })
+                .then(function (response) {
+                    console.log(response.status);
+                    console.log(response.message);
+                    console.log(response.data);
+                    alert("Return successful!");
+                })
+                .catch(function (error) {
+                    console.error("Return failed:", error);
+                }
+                );
+        }
+    </script>
+
+</body>
+
+</html>
