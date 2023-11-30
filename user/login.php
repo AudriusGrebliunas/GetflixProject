@@ -1,6 +1,6 @@
 <?php
-include 'db_connect.php';
-include 'request_config.php';
+include '../db_connect.php';
+include '../request_config.php';
 
 function createResponse($status, $message, $data = [])
 {
@@ -35,9 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $loginRow = $queryLogIn->fetch(PDO::FETCH_ASSOC);
-    if ($password == $loginRow["password"]) {
+    if ($password == $loginRow["password"] && $loginRow["deleted"] == "0") {
         echo createResponse("200", "Log In Successfull", $data);
-    } else {
+    } 
+    else if ($password == $loginRow["password"] && $loginRow["deleted"] == "1") {
+        echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
+    } 
+    
+    else {
         echo createResponse("403", "No Login/Password combinaison found, Are you registered ?", $data);
         exit;
     }

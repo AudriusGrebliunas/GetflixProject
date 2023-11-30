@@ -1,7 +1,7 @@
-<?php 
+<?php
 
-include 'db_connect.php';
-include 'request_config.php';
+include '../db_connect.php';
+include '../request_config.php';
 
 function createResponse($status, $message)
 {
@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dob = isset($data['dob']) ? $data['dob'] : '';
         $email = isset($data['email']) ? $data['email'] : '';
         $password = isset($data['password']) ? $data['password'] : '';
-
     }
 
     if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
@@ -29,14 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password) VALUES (:first_name, :last_name, :address, :email, :dob, :password)");
-    try {
-        $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password ]);
-        echo createResponse("200", "Successfully registered");
-    } catch (PDOException $e) {
-        error_log("Database Error: " . $e->getMessage());
-    
-        echo createResponse("500", "Internal Server Error");
+    $queryVerification = $db->query("SELECT email FROM users");
+    $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
+    $email_list = array_column($email_rows, 'email');
+    if ((in_array($email, $email_list))) {
+        echo createResponse("Error 420", "Email already in use");
         exit;
+    } else {
+        $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password) VALUES (:first_name, :last_name, :address, :email, :dob, :password)");
+        try {
+            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
+            echo createResponse("200", "Successfully registered");
+        } catch (PDOException $e) {
+            error_log("Database Error: " . $e->getMessage());
+
+            echo createResponse("500", "Internal Server Error");
+            exit;
+        }
     }
 }

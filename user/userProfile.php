@@ -1,7 +1,7 @@
 <?php 
 
-include 'db_connect.php';
-include 'request_config.php';
+include '../db_connect.php';
+include '../request_config.php';
 
 function createResponse($status, $message, $data = [])
 {
