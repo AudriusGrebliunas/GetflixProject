@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 01, 2023 at 10:56 AM
+-- Generation Time: Dec 01, 2023 at 11:02 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -27,12 +27,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `advices`
 --
 
-CREATE TABLE `advices` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `advices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
   `rating` float NOT NULL,
-  `comment` text NOT NULL
+  `comment` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `movie_id` (`movie_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -41,15 +44,16 @@ CREATE TABLE `advices` (
 -- Table structure for table `movies`
 --
 
-CREATE TABLE `movies` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `movies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `author` text NOT NULL,
   `resume` text NOT NULL,
   `year` int(11) NOT NULL,
   `link_yt` text NOT NULL,
   `image` text NOT NULL,
-  `genre` text NOT NULL
+  `genre` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -58,16 +62,17 @@ CREATE TABLE `movies` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(40) NOT NULL,
   `last_name` varchar(40) NOT NULL,
   `address` text NOT NULL,
   `email` text NOT NULL,
   `dob` date NOT NULL,
   `password` text NOT NULL,
-  `deleted` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `deleted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -84,72 +89,15 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `address`, `email`, `dob`,
 -- Table structure for table `wishlist`
 --
 
-CREATE TABLE `wishlist` (
+CREATE TABLE IF NOT EXISTS `wishlist` (
   `user_id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `movie_id` (`movie_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `advices`
---
-ALTER TABLE `advices`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `movie_id` (`movie_id`);
-
---
--- Indexes for table `movies`
---
-ALTER TABLE `movies`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `wishlist`
---
-ALTER TABLE `wishlist`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `movie_id` (`movie_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `advices`
---
-ALTER TABLE `advices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `movies`
---
-ALTER TABLE `movies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `wishlist`
---
-ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
