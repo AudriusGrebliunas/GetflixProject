@@ -36,15 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
     file_put_contents('put_data.log', $data);
 
-    // $queryVerification = $db->query("SELECT email FROM users");
-    // $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
-    // $email_list = array_column($email_rows, 'email');
-    // if ((in_array($email, $email_list))) {
-    //     echo createResponse("Error 420", "Email already in use");
-    //     exit;
-    // } else {
-
-
         // $queryVerification = $db->prepare("SELECT id FROM movies WHERE id = :id");
         // $queryVerification->execute(["id" => $id]);
         // $id_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
@@ -59,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 
         // } else {
-            $queryModify = $db->prepare("UPDATE movies SET (name, author, resume, year, link_yt, image, genre) VALUES (:name, :author, :resume, :year, :link_yt, :image, :genre) WHERE id = :id");
+            $queryModify = $db->prepare("UPDATE movies SET name = :name, author = :author, resume = :resume, year = :year, link_yt = :link_yt, image = :image, genre = :genre WHERE id = :id");
             try {
                 $queryModify->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image, "genre"=> $genre, "id" => $id]);
                 echo createResponse("200", "Successfully updated movie", $data);
