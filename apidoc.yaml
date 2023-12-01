@@ -23,9 +23,10 @@ tags:
     description: >-
       A wishlist of the user allowing him to put movies in three different
       category : want to watch, ongoing, finished.
-
+  - name: ratings
+    description: A rating of the user about a movie
 paths:
- /user/register.php:
+  /user/register.php:
     post:
       tags:
         - user
@@ -46,7 +47,7 @@ paths:
           description: Data Missing
         '500':
           description: Internal Server Error
- /user/login.php:
+  /user/login.php:
     summary: Log in an existing user
     description: Log in a user by checking his email/password combination
     post:
@@ -54,7 +55,7 @@ paths:
       description: ''
       operationId: logIn
       requestBody:
-        description: "Email and password"
+        description: Email and password
         required: true
         content:
           application/json:
@@ -62,22 +63,22 @@ paths:
               type: object
               properties:
                 email:
-                  type: "string"
-                  format: "email"
-                  description: "User's email address"
+                  type: string
+                  format: email
+                  description: User's email address
                 password:
-                  type: "string"
-                  description: "User's password"
+                  type: string
+                  description: User's password
       responses:
         '200':
-          description: "Log in Successfull"
+          description: Log in Successfull
         '401':
-          description: "Email or password missing"
+          description: Email or password missing
         '403':
-          description: "No Login/Password combinaison found, Are you registered?"
+          description: No Login/Password combinaison found, Are you registered?
       tags:
         - user
- /user/userProfiles.php:
+  /user/userProfiles.php:
     get:
       tags:
         - user
@@ -97,7 +98,7 @@ paths:
           description: Invalid request
         '404':
           description: Users not found
- /user/userProfile/{email}.php:
+  /user/userProfile/{email}.php:
     get:
       tags:
         - user
@@ -110,7 +111,7 @@ paths:
           description: The name that needs to be fetched. Use user1 for testing.
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -120,34 +121,6 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Invalid username supplied
-        '404':
-          description: User not found
-    put:
-      tags:
-        - user
-      summary: Update user
-      description: This can only be done by the logged-in user.
-      operationId: updateUser
-      parameters:
-        - name: email
-          in: path
-          description: Name that needs to be updated
-          required: true
-          schema:
-            type: "string"
-        - in: query
-          name: body
-          description: Updated user object
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-      responses:
-        '200':
-          description: User correctly updated! 
-        '400':
-          description: Invalid user supplied
         '404':
           description: User not found
     delete:
@@ -168,7 +141,28 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
- /movies/add.php:
+  /user/modifyProfile.php:
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: This can only be done by the logged-in user.
+      operationId: updateUser
+      requestBody:
+        description: Created user object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User correctly updated!
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+  /movies/add.php:
     post:
       tags:
         - movies
@@ -189,7 +183,7 @@ paths:
           description: Data Missing
         '500':
           description: Internal Server Error
- /movies/{movieName}.php:
+  /movies/{movieName}.php:
     get:
       tags:
         - movies
@@ -202,7 +196,7 @@ paths:
           description: The name that needs to be fetched. Use movie1 for testing.
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -226,7 +220,7 @@ paths:
           description: Name that needs to be updated
           required: true
           schema:
-            type: "string"
+            type: string
         - in: query
           name: body
           description: Updated user object
@@ -237,7 +231,7 @@ paths:
                 $ref: '#/components/schemas/Movie'
       responses:
         '200':
-          description: Movie correctly updated! 
+          description: Movie correctly updated!
         '400':
           description: Invalid movie supplied
         '404':
@@ -260,7 +254,7 @@ paths:
           description: Invalid movie supplied
         '404':
           description: Movie not found
- /wishlist/add.php:
+  /wishlist/add.php:
     post:
       tags:
         - wishlist
@@ -278,27 +272,27 @@ paths:
                 status:
                   type: integer
                   format: 0, 1, 2, 3
-                  description: "0 for not in the list, 1 for want, 2 for ongoing, 3 for finished"
+                  description: >-
+                    0 for not in the list, 1 for want, 2 for ongoing, 3 for
+                    finished
                 name:
-                  type: "string"
-                  description: "name of the movie"
+                  type: string
+                  description: name of the movie
                 email:
-                  type: "string"
-                  description: "email of the user"
+                  type: string
+                  description: email of the user
       responses:
         '200':
-          description: Successfully added to your wishlist on {status}
+          description: '{movie} successfully added to your wishlist on {status}'
         '401':
           description: Data Missing
         '402':
           description: User not found
-        '403':
-          description: Movie not found
         '404':
-          description: Couldn't update
+          description: Couldn't update, data missing
         '500':
           description: Internal Server Error
- /wishlist/{email}.php:
+  /wishlist/{email}.php:
     get:
       tags:
         - wishlist
@@ -308,10 +302,12 @@ paths:
       parameters:
         - name: email
           in: path
-          description: The user email that needs to be fetched. Use email@example.com for testing.
+          description: >-
+            The user email that needs to be fetched. Use email@example.com for
+            testing.
           required: true
           schema:
-            type: "string"
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -329,71 +325,118 @@ paths:
                       type: string
                       description: The status on the wishlist
         '400':
-          description: Invalid moviename supplied
-        '404':
-          description: Movie not found
- /wishlist/{email}/{movieName}.php:
+          description: Email not found. Do you have any movie in your wishlist?
+        '500':
+          description: Internal server error
+  /wishlist/modifyWishlist.php:
     put:
       tags:
         - wishlist
       summary: Update wishlist
       description: This can only be done by the logged in user.
       operationId: updateWishlist
-      parameters:
-        - name: movieName
-          in: path
-          description: Name of the movie that needs to be updated in the wishlist
-          required: true
-          schema:
-            type: "string"
-        - in: path
-          name: email
-          description: Updated user object
-          required: true
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: The name of the movie
-                    status:
-                      type: string
-                      description: The status on the wishlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wishlist'
       responses:
         '200':
-          description: Movie correctly updated! 
+          description: >-
+            Wishlist updated ! Your {movie} is correctly added to your
+            {wishlist.status}
         '400':
-          description: Invalid movie supplied
+          description: No movie with that user was found in the wishlist
         '404':
           description: Movie not found
+  /wishlist/deleteFromWishlist.php:
     delete:
       tags:
         - wishlist
-      summary: Delete movie from the wishlist
-      description: This can only be done by the logged in user.
-      operationId: deleteWishlist
+      summary: Update wishlist
+      description: This can only be done by the logged-in user.
+      operationId: deleteFromWishlist
       parameters:
-        - name: movieName
-          in: path
-          description: The name that needs to be deleted
+        - name: name
+          in: query
+          description: Name of the movie to be removed from the wishlist.
           required: true
           schema:
             type: string
         - name: email
-          in: path
-          description: The user's email who wants to delete
+          in: query
+          description: Email of the user requesting the deletion.
           required: true
           schema:
             type: string
       responses:
+        '200':
+          description: The {movie} was correctly removed from the wishlist.
         '400':
-          description: Invalid movie supplied
+          description: Invalid movie or email supplied
         '404':
           description: Movie not found
+  /rating/add:
+    summary: Add, get, update or delete a rating from a user on a movie
+    post:
+      summary: Add a rating to the database
+      description: ''
+      operationId: addRating
+      requestBody:
+        description: Created wishlist object
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Rating'
+      responses:
+        '200':
+          description: Your rating is correctly added.
+        '400':
+          description: Invalid movie or email supplied
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/movieRating.php:
+    summary: Get a movie rating from the db
+    get:
+      summary: Get a movie rating from the db
+      description: ''
+      operationId: movieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user who want to rate the movie
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The name of the movie who is rated
+          required: true
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: The rating that needs to be added
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rating'
+        '400':
+          description: Invalid movie or email supplied
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
 components:
   schemas:
     User:
@@ -448,6 +491,30 @@ components:
         genre:
           type: string
           example: serious movie
+    Wishlist:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        name:
+          type: string
+          example: Nom du film
+        Status:
+          type: integer
+          example: 1
+    Rating:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        name:
+          type: string
+          example: Nom du film
+        rating:
+          type: number
+          example: 4.5
     Tag:
       type: object
       properties:
