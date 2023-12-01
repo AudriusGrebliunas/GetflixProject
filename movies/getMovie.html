@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Form with Axios</title>
+  <!-- Include Axios library -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+  <h1>Search Movie</h1>
+
+  <!-- Search Form -->
+  <form id="searchForm">
+    <label for="searchInput">Search:</label>
+    <input type="text" id="searchInput" name="searchInput" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- Display Results -->
+  <div id="searchResults"></div>
+
+  <script>
+    // Event listener for form submission
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Get the search query
+      const searchQuery = document.getElementById('searchInput').value;
+
+      // Make Axios GET request
+      axios.get(`http://localhost/movies/getMovie.php?q=${searchQuery}`)
+        .then(function(response) {
+          // Display search results
+          console.log(response.data);
+        })
+        .catch(function(error) {
+          console.error('Error fetching data:', error);
+        });
+    });
+  </script>
+
+</body>
+</html>

@@ -26,7 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         $queryUserData->execute(["email" => $email]);
         $UserData=$queryUserData->fetchAll(PDO::FETCH_ASSOC);
-        echo createResponse("200", "Successfully retrieved data", $UserData);
+        if ($UserData) {
+            echo createResponse("200", "Successfully retrieved data", $UserData);
+        }
+        else {
+            echo createResponse("404","User not found");
+        }
+        
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());
         echo createResponse("500", "Internal Server Error");
