@@ -183,7 +183,7 @@ paths:
           description: Data Missing
         '500':
           description: Internal Server Error
-  /movies/{movieName}.php:
+  /movies/movie/{movieName}.php:
     get:
       tags:
         - movies
