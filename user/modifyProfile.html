@@ -54,15 +54,15 @@
 
             if (email || password || first_name || last_name || address || dob || email) {
                 axios.put('http://localhost:8080/modifyProfile.php', {
-                    data:
-                    {
+                    // data:
+                    // {
                         email: email,
                         password: password,
                         first_name: first_name,
                         last_name: last_name,
                         address: address,
                         dob: dob
-                    }
+                    // }
                 })
                     .then(function (response) {
                         console.log(response.data);

@@ -15,15 +15,28 @@ function createResponse($status, $message, $data = [])
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
-    $data = json_decode(file_get_contents('php://input'), true);
+    // $data = json_decode(file_get_contents('php://input'), true);
+    $email;
 
-    if (isset($data['email'])) {
-        $email = $data['email'];
+    if (isset($_GET['email'])) {
+        $email = $_GET['email'];
     }
     if (empty($email)) {
-        echo createResponse('Error 401', 'Data missing', $data);
+        echo createResponse('Error 401', 'Data missing', $email);
         exit;
     }
+    /***VERIFICATION EXISTENCE COMPTE */
+
+    $queryVerification = $db->prepare("SELECT email FROM users WHERE email = :email");
+    $queryVerification->execute(["email" => $email]);
+    $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
+    $email_list = array_column($email_rows, 'email');
+
+    if (!(in_array($email, $email_list))) {
+        echo createResponse("Error 420", "Profile doesn't exist", $email);
+        exit;}
+
+    /**FLAG DU COMPTE POUR SUPPRESSION */
 
     $queryUserDelete = $db->prepare("UPDATE users SET deleted = 1 WHERE email = :email");
     try {

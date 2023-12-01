@@ -14,36 +14,40 @@ function createResponse($status, $message, $data = [])
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    // $data = file_get_contents('php://input');
- $data = json_decode(file_get_contents('php://input'), true);
-    // file_put_contents('put_request.log', $data);
- if ($data) {
+    $rawData = file_get_contents('php://input');
+    $data = json_decode(($rawData), true);
+    // file_put_contents('Data.log', $data);
+
+    if ($data) {
         $first_name = isset($data['first_name']) ? $data['first_name'] : '';
         $last_name = isset($data['last_name']) ? $data['last_name'] : '';
         $address = isset($data['address']) ? $data['address'] : '';
         $dob = isset($data['dob']) ? $data['dob'] : '';
         $password = isset($data['password']) ? $data['password'] : '';
         $email = isset($data['email']) ? $data['email'] : '';
+    }
 
- }
+    if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
+        echo createResponse('Error 401', 'Data missing', $data);
+        exit;
+    }
 
-    // if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
-    //     echo createResponse('Error 401', 'Data missing', $data);
-    //     exit;
-    // }
-
-    $queryVerification = $db->query("SELECT email FROM users WHERE email = :email");
-    $queryVerification->execute(["email"=>$email]);
+    $queryVerification = $db->prepare("SELECT email FROM users WHERE email = :email");
+    $queryVerification->execute(["email" => $email]);
     $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
     $email_list = array_column($email_rows, 'email');
+    // file_put_contents('email_rows.log', $email_rows);
+    // file_put_contents('email_list.log', $email_list);
+
+
     if (!(in_array($email, $email_list))) {
-        echo createResponse("Error 420", "Profile doesn't exist");
+        echo createResponse("Error 420", "Profile doesn't exist", $email);
         exit;
     } else {
-        $queryRegister = $db->prepare("UPDATE TABLE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob, password = :password WHERE email = :email");
+        $queryRegister = $db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob, password = :password WHERE email = :email");
         try {
             $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
-            echo createResponse("200", "Successfully registered");
+            echo createResponse("200", "Successfully modified user data");
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
 
