@@ -32,6 +32,10 @@
             <input type="password" id="password" required>
         </div>
         <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div>
             <button type="submit">Change data</button>
         </div>
     </form>
@@ -39,35 +43,39 @@
     <script>
         function submitForm(event) {
             event.preventDefault();
-
             var first_name = document.getElementById("first_name").value;
             var last_name = document.getElementById("last_name").value;
             var address = document.getElementById("address").value;
             var dob = document.getElementById("birthday").value;
             var password = document.getElementById("password").value;
+            var email = document.getElementById("email").value;
 
 
-            if (!email || !password || !first_name || !last_name || !address || !dob || !email) {
-                alert("Your form is missing data");
-                return;
+
+            if (email || password || first_name || last_name || address || dob || email) {
+                axios.put('http://localhost:8080/modifyProfile.php', {
+                    data:
+                    {
+                        email: email,
+                        password: password,
+                        first_name: first_name,
+                        last_name: last_name,
+                        address: address,
+                        dob: dob
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        alert("Return succesful!");
+                    })
+                    .catch(function (error) {
+                        console.error("Return not succesful:", error);
+                    }
+                    );
             }
 
-            axios.post('http://localhost:8080/register.php', {
-                email: email,
-                password: password,
-                first_name : first_name,
-                last_name : last_name,
-                address: address,
-                dob: dob
-            })
-                .then(function (response) {
-                    console.log(response.data);
-                    alert("Register successful!");
-                })
-                .catch(function (error) {
-                    console.error("Register failed:", error);
-                }
-                );
+
+
         }
     </script>
 
