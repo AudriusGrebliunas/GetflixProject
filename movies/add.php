@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // } else {
         $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image, genre) VALUES (:name, :author, :resume, :year, :link_yt, :image, :genre)");
         try {
-            $queryRegister->execute(["name" => $name, "author" => $author, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
+            $queryAdd->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image, "genre"=> $genre]);
             echo createResponse("200", "Successfully added movie", $data);
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());

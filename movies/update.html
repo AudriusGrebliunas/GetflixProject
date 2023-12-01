@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <form id="movieSubmitForm" onsubmit="submitForm(event)">
+        <div>
+            <label for="id">ID of the movie</label>
+            <input id="id" required>
+        </div>
+        <div>
+            <label for="name">Name of the movie:</label>
+            <input id="name" required>
+        </div>
+        <div>
+            <label for="author">Author:</label>
+            <input id="author" required>
+        </div>
+        <div>
+            <label for="resume">Address:</label>
+            <input id="resume" required>
+        </div>
+        <div>
+            <label for="year">Year:</label>
+            <input id="year" name="year" required>
+        </div>
+        <div>
+            <label for="link_yt">-Youtube link:</label>
+            <input id="link_yt" required>
+        </div>
+        <div>
+            <label for="image">Images:</label>
+            <input id="image" required>
+        </div>
+        <div>
+            <label for="genre">Genre:</label>
+            <input id="genre" required>
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var author = document.getElementById("author").value;
+            var resume = document.getElementById("resume").value
+            var year = document.getElementById("year").value;
+            var link_yt = document.getElementById("link_yt").value;
+            var image = document.getElementById("image").value;
+            var genre = document.getElementById("genre").value;
+
+
+
+            // if (!email || !password || !first_name || !last_name || !address || !dob || !email) {
+            //     alert("Your form is missing data");
+            //     return;
+            // }
+
+            axios.put('http://localhost:8080/movies/update.php', {
+                id: id,
+                name: name,
+                author: author,
+                resume : resume,
+                year : year,
+                link_yt: link_yt,
+                image: image,
+                genre: genre
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    alert("Update successful!");
+                })
+                .catch(function (error) {
+                    console.error("Register failed:", error);
+                }
+                );
+        }
+    </script>
+
+</body>
+
+</html>
