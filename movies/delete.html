@@ -14,7 +14,21 @@
     <input type="text" id="movie_id" name="movie_id" required>
     <button type="button" onclick="deleteMovie()">Delete Movie</button>
 </form>
+<script>
+function deleteMovie() {
+    const movieId = document.getElementById('movie_id').value;
 
+    axios.delete('delete_movie.php', { data: { name: movieId } })
+        .then(response => {
+            console.log(response.data);
+            // Handle success, e.g., show a success message to the user
+        })
+        .catch(error => {
+            console.error(error);
+            // Handle error, e.g., show an error message to the user
+        });
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="script.js"></script>
 
