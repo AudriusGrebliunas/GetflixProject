@@ -399,40 +399,183 @@ paths:
           description: Internal server error
       tags:
         - ratings
-  /rating/movieRating.php:
+  /rating/{movieName}.php:
     summary: Get a movie rating from the db
     get:
       summary: Get a movie rating from the db
       description: ''
       operationId: movieRating
       parameters:
+        - name: movieName
+          in: path
+          description: The name of the movie you want to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie correctly fetched
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  format: "Movie Name"
+                  description: Name of the movie
+                rating:
+                  type: number
+                  description: Global rating of the movie
+        '400':
+          description: Invalid movie supplied
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/{userEmail}.php:
+    summary: Get all user ratings from the db
+    get:
+      summary: Get all user rating from the db
+      description: ''
+      operationId: userRating
+      parameters:
+        - name: userEmail
+          in: path
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User correctly fetched
+          content:
+            application/json:
+             schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/userMovieRating.php:
+    summary: Get a single rating from a movie for a defined user
+    get:
+      summary: Get a single rating from a movie for a defined user
+      description: ''
+      operationId: userMovieRating
+      parameters:
         - name: email
           in: query
-          description: The email of the user who want to rate the movie
+          description: The email of the user's ratings
           required: true
           schema:
             type: string
         - name: name
           in: query
-          description: The name of the movie who is rated
+          description: The movie name of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User correctly fetched
+          content:
+            application/json:
+             schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/updateMovieRating.php:
+    summary: Update a movie rating for a user 
+    put:
+      summary: Update a movie rating for a user 
+      description: ''
+      operationId: updateMovieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The movie name of the user's ratings
           required: true
           schema:
             type: string
         - name: rating
           in: query
-          description: The rating that needs to be added
+          description: The new rating of the user
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         '200':
-          description: Successful operation
+          description: Movie rating updated !
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Rating'
+             schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
         '400':
-          description: Invalid movie or email supplied
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/deleteMovieRating.php:
+    summary: Update a movie rating for a user 
+    delete:
+      summary: Update a movie rating for a user 
+      description: ''
+      operationId: deleteMovieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The movie name of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie rating deleted !
+        '400':
+          description: No rating found for that user
         '500':
           description: Internal server error
       tags:
