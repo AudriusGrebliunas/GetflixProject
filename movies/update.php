@@ -36,20 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
     file_put_contents('put_data.log', $data);
 
-        // $queryVerification = $db->prepare("SELECT id FROM movies WHERE id = :id");
-        // $queryVerification->execute(["id" => $id]);
-        // $id_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
-        // $id_list = array_column($id_rows, 'email');
-        // file_put_contents('id_rows.log', $id_rows);
-        // file_put_contents('id_list.log', $id_list);
+        $queryVerification = $db->prepare("SELECT id FROM movies WHERE id = :id");
+        $queryVerification->execute(["id" => $id]);
+        $id_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
     
 
-        // if (!(in_array($id, $id_list))) {
-        //     echo createResponse("Error 404", "Movie not found", $id);
-        //     exit;
+        if (!$id_rows) {
+            echo createResponse("Error 404", "Movie not found", $id);
+            exit;
 
 
-        // } else {
+        } else {
             $queryModify = $db->prepare("UPDATE movies SET name = :name, author = :author, resume = :resume, year = :year, link_yt = :link_yt, image = :image, genre = :genre WHERE id = :id");
             try {
                 $queryModify->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image, "genre"=> $genre, "id" => $id]);
@@ -61,4 +58,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
                 exit;
             }
         }
-    // }
+    }
