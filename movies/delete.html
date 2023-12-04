@@ -18,7 +18,7 @@
 function deleteMovie() {
     const movieId = document.getElementById('movie_id').value;
 
-    axios.delete('http://localhost/movies/delete.php', { 
+    axios.delete('http://localhost:8080/movies/movie.php', { 
         params: {  
             id: movieId 
         } 
