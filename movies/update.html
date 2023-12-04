@@ -17,31 +17,31 @@
         </div>
         <div>
             <label for="name">Name of the movie:</label>
-            <input id="name" required>
+            <input id="name">
         </div>
         <div>
             <label for="author">Author:</label>
-            <input id="author" required>
+            <input id="author">
         </div>
         <div>
             <label for="resume">Address:</label>
-            <input id="resume" required>
+            <input id="resume">
         </div>
         <div>
             <label for="year">Year:</label>
-            <input id="year" name="year" required>
+            <input id="year" name="year">
         </div>
         <div>
             <label for="link_yt">-Youtube link:</label>
-            <input id="link_yt" required>
+            <input id="link_yt">
         </div>
         <div>
             <label for="image">Images:</label>
-            <input id="image" required>
+            <input id="image">
         </div>
         <div>
             <label for="genre">Genre:</label>
-            <input id="genre" required>
+            <input id="genre">
         </div>
         <div>
             <button type="submit">Register</button>
@@ -67,7 +67,7 @@
             //     return;
             // }
 
-            axios.put('http://localhost/movies/update.php', {
+            axios.put('http://localhost:8080/movies/update.php', {
                 id: id,
                 name: name,
                 author: author,
