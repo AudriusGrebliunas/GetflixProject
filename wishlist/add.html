@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+</head>
+<body>
+
+<form id="movieForm">
+    <label for="id">Movie ID:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+
+    <label>Radius:</label>
+    <label>
+        <input type="radio" name="radius" value="1" checked> 1
+    </label>
+    <label>
+        <input type="radio" name="radius" value="2"> 2
+    </label>
+    <label>
+        <input type="radio" name="radius" value="3"> 3
+    </label>
+    <br>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function submitForm() {
+        const formData = {
+            movie_id: document.getElementById('id').value,
+            user_id: document.getElementById('email').value,
+            radius: document.querySelector('input[name="radius"]:checked').value
+        };
+
+        // Replace 'YOUR_BACKEND_ENDPOINT' with your actual backend endpoint
+        const backendEndpoint = 'http://localhost/wishlist/add.php';
+
+        axios.post(backendEndpoint, formData)
+            .then(response => {
+                console.log('Success:', response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
