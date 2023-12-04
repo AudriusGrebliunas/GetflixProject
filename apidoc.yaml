@@ -186,7 +186,11 @@ paths:
               $ref: '#/components/schemas/Movie'
       responses:
         '200':
-          description: Successfully added
+          description: Successfully added movie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieWithId'
         '401':
           description: Data Missing
         '500':
@@ -607,7 +611,7 @@ components:
               type: integer
               format: int64
               description: The user's ID.
-        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/Movie'
     User:
       type: object
       properties:
@@ -639,24 +643,33 @@ components:
         name:
           type: string
           example: Petit Poney
+          description: The name of the movie
         author:
           type: string
           example: L'Auteur fou
+          description: The author of the movie
         resume:
           type: string
           example: C'est l'histoire d'un poney
+          description: A brief summary of the movie
         year:
           type: integer
-          example: '2002'
+          example: 2002
+          description: The year of release
         link_yt:
           type: string
           example: https://www.youtube.com/trailer
+          description: The YouTube trailer link
         image:
           type: string
           example: https://www.urldemonimage.com/lien
+          description: The URL of the movie's image
         genre:
           type: string
           example: serious movie
+          description: The genre of the movie
+      required:
+        - name
     Wishlist:
       type: object
       properties:
