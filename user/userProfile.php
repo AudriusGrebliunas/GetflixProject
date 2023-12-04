@@ -32,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             echo createResponse("200", "Successfully retrieved data", $UserData);
         }
         else {
-            echo createResponse("404","User not found");
+            echo createResponse("405","User not found");
         }
         
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());
-        echo createResponse("500", "Internal Server Error");
+        echo createResponse("501", "Internal Server Error");
         exit;
     }
 }
@@ -46,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $rawData = file_get_contents('php://input');
     $data = json_decode(($rawData), true);
-    // file_put_contents('Data.log', $data);
 
     if ($data) {
         $first_name = isset($data['first_name']) ? $data['first_name'] : '';
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
 
     if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
-        echo createResponse('Error 401', 'Data missing', $data);
+        echo createResponse('Error 403', 'Data missing', $data);
         exit;
     }
 
@@ -69,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 
     if (!(in_array($email, $email_list))) {
-        echo createResponse("Error 420", "Profile doesn't exist", $email);
+        echo createResponse("Error 421", "Profile doesn't exist", $email);
         exit;
     } else {
         $queryRegister = $db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob, password = :password WHERE email = :email");
@@ -79,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
 
-            echo createResponse("500", "Internal Server Error");
+            echo createResponse("503", "Internal Server Error");
             exit;
         }
     }
@@ -95,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         $email = $_GET['email'];
     }
     if (empty($email)) {
-        echo createResponse('Error 401', 'Data missing', $email);
+        echo createResponse('Error 402', 'Data missing', $email);
         exit;
     }
     /***VERIFICATION EXISTENCE COMPTE */
@@ -117,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         echo createResponse("200", "Account scheduled for deletion", []);
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());
-        echo createResponse("500", "Internal Server Error");
+        echo createResponse("502", "Internal Server Error");
         exit;
     }
 }
