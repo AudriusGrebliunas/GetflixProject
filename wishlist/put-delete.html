@@ -55,10 +55,15 @@
     function deleteItem() {
         // Assuming you have a way to get the movie ID and email for deletion
         var movieId = document.getElementById("movieId").value;
-        var email = document.getElementById("email").value;
+        var user_id = document.getElementById("email").value;
 
         // Make Axios DELETE request
-        axios.delete(`/your/api/endpoint?movieId=${movieId}&email=${email}`)
+        axios.delete(`http://localhost/wishlist/wishlist.php`, {
+            params: {  
+            user_id: user_id, 
+            movie_id: movieId 
+        } 
+        })
             .then(function (response) {
                 console.log(response.data);
                 // Handle success, e.g., show a success message

@@ -90,3 +90,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         }
     }
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    if (isset($_GET['user_id']) && isset($_GET['movie_id'])) {
+        $user_id = $_GET['user_id'];
+        $movie_id = $_GET['movie_id'];
+    }
+    if (empty($user_id) || empty($movie_id)) {
+        echo createResponse("400", "No user-id or movie-id submitted");
+    }
+    $queryFindWishlist = $db->prepare('SELECT * FROM wishlist WHERE user_id = :user_id AND movie_id = :movie_id');
+    $queryFindWishlist->execute(['user_id' => $user_id, 'movie_id' => $movie_id]);
+    $wishlistExists = $queryFindWishlist->fetch(PDO::FETCH_ASSOC);
+    if (!$wishlistExists) {
+        echo createResponse('404', 'ERROR: No wishlist found', $wishlistExists);
+        exit;
+    } else {
+        try {
+            $queryDelete = $db->prepare('DELETE FROM wishlist WHERE user_id = :user_id AND movie_id = :movie_id');
+            $queryDelete->execute(['movie_id' => $movie_id, 'user_id' => $user_id]);
+            echo createResponse('200', 'Successfully deleted from the wishlist');
+        } catch (PDOException $e) {
+            error_log('' . $e->getMessage());
+            echo createResponse('500', 'Internal Server Error', []);
+            exit;
+        }
+    }
+}
