@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 include '../db_connect.php';
 include '../request_config.php';
@@ -13,6 +13,36 @@ function createResponse($status, $message, $data = [])
     return json_encode($response);
 }
 
+// Trouver un utilisateur par email
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['email'])) {
+        $email = $_GET['email'];
+    }
+    if (empty($email)) {
+        echo createResponse('Error 401', 'Data missing');
+        exit;
+    }
+
+    $queryUserData = $db->prepare("SELECT first_name, last_name, address, email, dob, password FROM users WHERE email = :email");
+    try {
+        $queryUserData->execute(["email" => $email]);
+        $UserData=$queryUserData->fetchAll(PDO::FETCH_ASSOC);
+        if ($UserData) {
+            echo createResponse("200", "Successfully retrieved data", $UserData);
+        }
+        else {
+            echo createResponse("404","User not found");
+        }
+        
+    } catch (PDOException $e) {
+        error_log("Database Error: " . $e->getMessage());
+        echo createResponse("500", "Internal Server Error");
+        exit;
+    }
+}
+
+// Update un utilisateur par email
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $rawData = file_get_contents('php://input');
     $data = json_decode(($rawData), true);
@@ -36,8 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $queryVerification->execute(["email" => $email]);
     $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
     $email_list = array_column($email_rows, 'email');
-    // file_put_contents('email_rows.log', $email_rows);
-    // file_put_contents('email_list.log', $email_list);
 
 
     if (!(in_array($email, $email_list))) {
@@ -56,3 +84,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         }
     }
 }
+
+// Supprimer un utilisateur
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    // $data = json_decode(file_get_contents('php://input'), true);
+    $email;
+
+    if (isset($_GET['email'])) {
+        $email = $_GET['email'];
+    }
+    if (empty($email)) {
+        echo createResponse('Error 401', 'Data missing', $email);
+        exit;
+    }
+    /***VERIFICATION EXISTENCE COMPTE */
+
+    $queryVerification = $db->prepare("SELECT email FROM users WHERE email = :email");
+    $queryVerification->execute(["email" => $email]);
+    $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
+    $email_list = array_column($email_rows, 'email');
+
+    if (!(in_array($email, $email_list))) {
+        echo createResponse("Error 420", "Profile doesn't exist", $email);
+        exit;}
+
+    /**FLAG DU COMPTE POUR SUPPRESSION */
+
+    $queryUserDelete = $db->prepare("UPDATE users SET deleted = 1 WHERE email = :email");
+    try {
+        $queryUserDelete->execute(["email"=>$email]);
+        echo createResponse("200", "Account scheduled for deletion", []);
+    } catch (PDOException $e) {
+        error_log("Database Error: " . $e->getMessage());
+        echo createResponse("500", "Internal Server Error");
+        exit;
+    }
+}
+
