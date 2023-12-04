@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Rating Form</title>
+</head>
+<body>
+
+  <form id="movieRatingForm">
+    <label for="user_id">User ID:</label>
+    <input type="text" id="user_id" name="user_id"><br><br>
+
+    <label for="movie_id">Movie ID:</label>
+    <input type="text" id="movie_id" name="movie_id"><br><br>
+
+    <label for="rating">Rating:</label>
+    <input type="text" id="rating" name="rating"><br><br>
+
+    <button type="button" onclick="postData()">Post</button>
+    <button type="button" onclick="getData()">Get</button>
+    <button type="button" onclick="putData()">Put</button>
+    <button type="button" onclick="deleteData()">Delete</button>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    function postData() {
+      const user_id = document.getElementById('user_id').value;
+      const movie_id = document.getElementById('movie_id').value;
+      const rating = document.getElementById('rating').value;
+
+      axios.post('/your-post-endpoint', {
+        user_id: user_id,
+        movie_id: movie_id,
+        rating: rating
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function getData() {
+      const user_id = document.getElementById('user_id').value;
+      const movie_id = document.getElementById('movie_id').value;
+
+      axios.get(`http://localhost/rating/rating.php`, {
+        params: {
+          user_id: user_id,
+          movie_id: movie_id,
+        }
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function putData() {
+      const user_id = document.getElementById('user_id').value;
+      const movie_id = document.getElementById('movie_id').value;
+      const rating = document.getElementById('rating').value;
+
+      axios.put(`http://localhost/rating/rating.php`, {
+        user_id: user_id,
+        movie_id: movie_id,
+        rating: rating
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function deleteData() {
+      const user_id = document.getElementById('user_id').value;
+      const movie_id = document.getElementById('movie_id').value;
+
+      axios.delete(`http://localhost/rating/rating.php`, {
+        params: {
+          user_id: user_id,
+          movie_id: movie_id,
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  </script>
+</body>
+</html>
