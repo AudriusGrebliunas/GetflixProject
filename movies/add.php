@@ -30,14 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo createResponse('Error 401', 'Data missing', $data);
         exit;
     }
-
-    // $queryVerification = $db->query("SELECT email FROM users");
-    // $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
-    // $email_list = array_column($email_rows, 'email');
-    // if ((in_array($email, $email_list))) {
-    //     echo createResponse("Error 420", "Email already in use");
-    //     exit;
-    // } else {
+         else {
         $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image, genre) VALUES (:name, :author, :resume, :year, :link_yt, :image, :genre)");
         try {
             $queryAdd->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image, "genre"=> $genre]);
@@ -49,3 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
     }
+}
