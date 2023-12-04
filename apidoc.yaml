@@ -144,6 +144,8 @@ paths:
           schema:
             type: string
       responses:
+        '200':
+          description: Account scheduled for deletion
         '402':
           description: Data missing
         '420':
@@ -168,6 +170,8 @@ paths:
           description: Successfully modified user data
         '421':
           description: Profile doesn't exist
+        '403':
+          description: Data missing
         '503':
           description: Internal Server Error
   /movies/add.php:
