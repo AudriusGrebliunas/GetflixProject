@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email_rows = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
     $email_list = array_column($email_rows, 'email');
     if ((in_array($email, $email_list))) {
-        echo createResponse("Error 420", "Email already in use");
+        echo createResponse("Error 420", "Email already in use. Try to use Login page if you're already registered.");
         exit;
     } else {
         $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password) VALUES (:first_name, :last_name, :address, :email, :dob, :password)");

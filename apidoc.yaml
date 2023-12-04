@@ -1,10 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Register and Login (Salty project)
+  title: Salty project
   version: 1.0.11
   description: >-
-    This is an API who aims to implement a login/register system with encrypted
-    password
+    This is an API who aims to implement a login/register system, fonctionnality about movies, a wishlist system and a rating
   contact:
     email: gwendolinejacobs1@gmail.com
     name: Gwendoline Jacobs - Audrius Grebliunas
@@ -45,6 +44,8 @@ paths:
           description: Successfully registered
         '401':
           description: Data Missing
+        '420':
+          description: Email already in use. Try to use Login page if you're already registered.
         '500':
           description: Internal Server Error
   /user/login.php:
@@ -76,6 +77,10 @@ paths:
           description: Email or password missing
         '403':
           description: No Login/Password combinaison found, Are you registered?
+        '469':
+          description: Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.
+        '500':
+          description: Error server
       tags:
         - user
   /user/userProfiles.php:
@@ -183,7 +188,7 @@ paths:
           description: Data Missing
         '500':
           description: Internal Server Error
-  /movies/movie/{movieName}.php:
+  /movies/movie.php:
     get:
       tags:
         - movies
@@ -192,7 +197,7 @@ paths:
       operationId: getMovieByName
       parameters:
         - name: movieName
-          in: path
+          in: query
           description: The name that needs to be fetched. Use movie1 for testing.
           required: true
           schema:
@@ -216,7 +221,7 @@ paths:
       operationId: updateMovie
       parameters:
         - name: movieName
-          in: path
+          in: query
           description: Name that needs to be updated
           required: true
           schema:
@@ -244,7 +249,7 @@ paths:
       operationId: deleteMovie
       parameters:
         - name: movieName
-          in: path
+          in: query
           description: The movie that needs to be deleted
           required: true
           schema:
@@ -585,10 +590,10 @@ components:
     User:
       type: object
       properties:
-        firstName:
+        first_name:
           type: string
           example: John
-        lastName:
+        last_name:
           type: string
           example: James
         email:
