@@ -211,15 +211,17 @@ paths:
             type: string
       responses:
         '200':
-          description: Successful operation
+          description: 'SUCCESS: Movie(s) successfully retrieved'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
-        '400':
-          description: Invalid moviename supplied
-        '404':
-          description: Movie not found
+               type: array
+               items:
+                $ref: '#/components/schemas/MovieWithId'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
     put:
       tags:
         - movies
@@ -242,12 +244,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/Movie'
       responses:
-        '200':
-          description: Movie correctly updated!
-        '400':
-          description: Invalid movie supplied
-        '404':
-          description: Movie not found
+        '201':
+          description: "SUCCESS: Movie successfully updated"
+          content:
+           application/json:
+            schema:
+             type: object
+             properties:
+              id:
+               type: integer 
+               description: id of the movie
+        '402':
+          description: "ERROR: Movie not found"
+        '501':
+          description: "FAILURE: Internal Server Error"
     delete:
       tags:
         - movies
@@ -262,10 +272,14 @@ paths:
           schema:
             type: string
       responses:
-        '400':
-          description: Invalid movie supplied
+        '202':
+          description: 'SUCCESS: Movie successfully deleted'
+        '403':
+          description: "ERROR: Invalid Moviename provided"
         '404':
-          description: Movie not found
+          description: 'ERROR: Movie not found'
+        '502':
+          description: 'FAILURE: Internal error' 
   /wishlist/add.php:
     post:
       tags:

@@ -12,7 +12,7 @@ function createResponse ($status, $message, $data = []) {
     return json_encode($response);
 }
 
-/**RECHERCHER UN FILM AVEC SON NOM */
+/**RECHERCHER UN OU PLUSIEURS FILM AVEC SON NOM */
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
