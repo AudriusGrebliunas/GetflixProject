@@ -23,25 +23,24 @@
   <script>
     document.getElementById('movieForm').addEventListener('submit', function (event) {
       event.preventDefault();
-      const movieName = encodeURIComponent(document.getElementById('movieName').value);
+      const movie_id = encodeURIComponent(document.getElementById('movieName').value);
 
-      axios.get(`http://localhost/rating/getByMovie.php/${movieName}`)
-        .then(response => {
-          const resultDiv = document.getElementById('result');
-          resultDiv.innerHTML = `<h2>Results for ${movieName}:</h2>`;
+      axios.get(`http://localhost/rating/getByMovie.php?movie_id=${movie_id}`)
+      .then(response => {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<h2>Results for ${movie_id}:</h2>`;
 
-          if (response.data.results.length === 0) {
-            resultDiv.innerHTML += '<p>No results found.</p>';
-          } else {
-            response.data.results.forEach(movie => {
-              resultDiv.innerHTML += `<p>${movie.title}</p>`;
-            });
-          }
-        })
-        .catch(error => {
-          console.error('Error making API request:', error);
-        });
-    });
+        if (response.data.data.length === 0) {
+          resultDiv.innerHTML += '<p>No results found.</p>';
+          console.log(response.data);
+        } else {
+            console.log(response.data);;
+        }
+      })
+      .catch(error => {
+        console.error('Error making API request:', error);
+      });
+  });
   </script>
 
 </body>
