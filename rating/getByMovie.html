@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search Form</title>
+</head>
+<body>
+
+  <h1>Movie Search</h1>
+
+  <form id="movieForm">
+    <label for="movieName">Movie Name:</label>
+    <input type="text" id="movieName" name="movieName" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="result"></div>
+
+  <!-- Include Axios from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    document.getElementById('movieForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const movieName = encodeURIComponent(document.getElementById('movieName').value);
+
+      axios.get(`http://localhost/rating/getByMovie.php/${movieName}`)
+        .then(response => {
+          const resultDiv = document.getElementById('result');
+          resultDiv.innerHTML = `<h2>Results for ${movieName}:</h2>`;
+
+          if (response.data.results.length === 0) {
+            resultDiv.innerHTML += '<p>No results found.</p>';
+          } else {
+            response.data.results.forEach(movie => {
+              resultDiv.innerHTML += `<p>${movie.title}</p>`;
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error making API request:', error);
+        });
+    });
+  </script>
+
+</body>
+</html>

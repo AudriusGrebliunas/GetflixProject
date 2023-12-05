@@ -66,7 +66,7 @@ WHERE users.id = :user_id AND movies.id = :movie_id");
     }
 }
 
-// Update un film présent dans la wishlist d'un utilisate
+// Update un rating d'un film pour un utilisateur
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     }
 }
 
-// Supprimer 
+// Supprimer un rating de film 
+
 if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     if (isset($_GET['user_id']) && isset($_GET['movie_id'])) {
         $user_id = $_GET['user_id'];
