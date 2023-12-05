@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include '../db_connect.php';
 include '../request_config.php';
@@ -18,11 +18,10 @@ function createResponse($status, $message, $data = [])
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (isset($_GET['user_id']) && isset ($_GET['movie_id'])) {
+    if (isset($_GET['user_id']) && isset($_GET['movie_id'])) {
         $user_id = $_GET['user_id'];
         $movie_id = $_GET['movie_id'];
-    }
-    else {
+    } else {
         echo createResponse("400", "No email submitted");
         exit;
     }
@@ -51,7 +50,7 @@ JOIN
     movies ON advices.movie_id = movies.id
 WHERE users.id = :user_id AND movies.id = :movie_id");
         try {
-            $queryGet->execute(["user_id" => $user_id, "movie_id"=> $movie_id]);
+            $queryGet->execute(["user_id" => $user_id, "movie_id" => $movie_id]);
             $ratingMovie = $queryGet->fetchAll(PDO::FETCH_ASSOC);
             if ($ratingMovie) {
                 echo createResponse('200', 'Successful operation', $ratingMovie);
@@ -79,16 +78,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if (empty($data["user_id"]) || empty($data["movie_id"]) || empty($data["rating"])) {
         echo createResponse('Error 401', 'Data missing', $data);
         exit;
-    } else {
-        $queryAdd = $db->prepare("UPDATE advices SET rating = :rating WHERE user_id = :user_id AND movie_id = :movie_id");
-        try {
-            $queryAdd->execute(["movie_id" => $movie_id, "user_id" => $user_id, "rating" => $rating]);
-            echo createResponse("200", "Successfully updated rating", $data);
-        } catch (PDOException $e) {
-            error_log("Database Error: " . $e->getMessage());
-            echo createResponse("500", "Internal Server Error", []);
-            exit;
-        }
+    }
+
+    $queryVerification = $db->prepare("SELECT user_id, movie_id from advices WHERE user_id = :user_id AND movie_id = :movie_id");
+    $queryVerification->execute(["user_id" => $user_id, "movie_id" => $movie_id]);
+    $queryVerificationResult = $queryVerification->fetch(PDO::FETCH_ASSOC);
+    if (!$queryVerificationResult) {
+        echo createResponse('Error 402', "This rating does not exist", $data);
+        exit;
+    }
+    $queryAdd = $db->prepare("UPDATE advices SET rating = :rating WHERE user_id = :user_id AND movie_id = :movie_id");
+    try {
+        $queryAdd->execute(["movie_id" => $movie_id, "user_id" => $user_id, "rating" => $rating]);
+        echo createResponse("200", "Successfully updated rating", $data);
+    } catch (PDOException $e) {
+        error_log("Database Error: " . $e->getMessage());
+        echo createResponse("500", "Internal Server Error", []);
+        exit;
     }
 }
 
@@ -120,14 +126,3 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
