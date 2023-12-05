@@ -35,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $loginRow = $queryLogIn->fetch(PDO::FETCH_ASSOC);
-    if ($password == $loginRow["password"] && $loginRow["deleted"] == "0") {
+    if ( password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "0") {
         echo createResponse("200", "Log In Successfull", $data);
     } 
-    else if ($password == $loginRow["password"] && $loginRow["deleted"] == "1") {
+    else if (password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "1") {
         echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
     } 
     

@@ -34,7 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ((in_array($email, $email_list))) {
         echo createResponse("Error 420", "Email already in use. Try to use Login page if you're already registered.");
         exit;
-    } else {
+    }
+    $password = password_hash(
+        $password,
+        PASSWORD_ARGON2ID,
+        [
+            'memory_cost' => 2048,
+            'time_cost'   => 4,
+            'threads'     => 2,
+        ]
+    );
+     
         $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password) VALUES (:first_name, :last_name, :address, :email, :dob, :password)");
         try {
             $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
@@ -45,5 +55,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo createResponse("500", "Internal Server Error");
             exit;
         }
-    }
 }
