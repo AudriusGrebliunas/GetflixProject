@@ -110,9 +110,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     /**FLAG DU COMPTE POUR SUPPRESSION */
 
-    $queryUserDelete = $db->prepare("UPDATE users SET deleted = 1 WHERE email = :email");
+
     try {
+        $db->beginTransaction();
+
+        $queryDeleteWishlist = $db->prepare("DELETE FROM wishlist WHERE user_id IN (SELECT id FROM users WHERE email = :email)");
+        $queryDeleteWishlist->execute(['email' => $email]);
+
+        $queryUserDelete = $db->prepare("UPDATE users SET deleted = 1 WHERE email = :email");
         $queryUserDelete->execute(["email"=>$email]);
+        
+        $db->commit();
+
         echo createResponse("200", "Account scheduled for deletion", []);
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());

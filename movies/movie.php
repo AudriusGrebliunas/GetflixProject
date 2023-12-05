@@ -1,13 +1,14 @@
-<?php 
+<?php
 
 include '../db_connect.php';
 include '../request_config.php';
 
-function createResponse ($status, $message, $data = []) {
+function createResponse($status, $message, $data = [])
+{
     $response = [
-    'status'=> $status, 
-    'message'=> $message, 
-    'data'=> $data
+        'status' => $status,
+        'message' => $message,
+        'data' => $data
     ];
     return json_encode($response);
 }
@@ -29,16 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     WHERE name LIKE :name
     GROUP BY movies.id");
     try {
-        $queryMovieName->execute(['name'=> "%$name%"]);
+        $queryMovieName->execute(['name' => "%$name%"]);
         $movieData = $queryMovieName->fetchAll(PDO::FETCH_ASSOC);
-        if($movieData) {
+        if ($movieData) {
             echo createResponse('200', 'SUCCESS: Movie(s) successfully retrieved', $movieData);
         } else {
             echo createResponse('401', 'ERROR: No movie(s) found with that name', $movieData);
         }
 
-    }
-    catch (PDOexception $e) {
+    } catch (PDOexception $e) {
         error_log("Database error: " . $e->getMessage());
         echo createResponse('500', 'FAILURE: Internal Server Error');
         exit;
@@ -106,28 +106,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
     if (isset($_GET["id"])) {
-    $movieid = $_GET["id"];
-    }
-    else {
-        echo createResponse('403',"ERROR: Invalid Moviename provided");
+        $movieid = $_GET["id"];
+    } else {
+        echo createResponse('403', "ERROR: Invalid Moviename provided");
         exit;
-    };
+    }
+    ;
     $queryFindMovie = $db->prepare('SELECT * FROM movies WHERE id = :id');
-    $queryFindMovie->execute([':id'=> $movieid]);
+    $queryFindMovie->execute([':id' => $movieid]);
     $movie = $queryFindMovie->fetch(PDO::FETCH_ASSOC);
     if (!$movie) {
-        echo createResponse('404','ERROR: Movie not found', []);
+        echo createResponse('404', 'ERROR: Movie not found', []);
         exit;
-    }
-    else {
+    } else {
         try {
-            $queryFetchMovie = $db->prepare("DELETE FROM movies WHERE id = :id");
-            $queryFetchMovie->execute([':id' => $movie['id']]);
-            echo createResponse("202","SUCCESS: Movie successfully deleted");
-        }
-        catch (PDOException $e) {
-            echo createResponse("502","FAILURE: Internal error", []);
+            $db->beginTransaction();
+
+            $queryDeleteAdvices = $db->prepare("DELETE FROM advices WHERE movie_id IN (SELECT id FROM movies WHERE id = :id)");
+            $queryDeleteAdvices->execute(['id' => $movieid]);
+
+            $queryDeleteWishlist = $db->prepare("DELETE FROM wishlist WHERE movie_id IN (SELECT id FROM movies WHERE id = :id)");
+            $queryDeleteWishlist->execute(['id' => $movieid]);
+
+            $queryDeleteMovies = $db->prepare("DELETE FROM movies WHERE id = :id");
+            $queryDeleteMovies->execute(['id' => $movieid]);
+
+            $db->commit();
+            echo createResponse("202", "SUCCESS: Movie successfully deleted");
+        } catch (PDOException $e) {
+            echo createResponse("502", "FAILURE: Internal error", []);
             exit;
-        };
+        }
+        ;
     }
 }
