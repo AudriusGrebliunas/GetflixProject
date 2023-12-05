@@ -23,7 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo createResponse('400', 'ERROR: Invalid movie name supplied', []);
         exit;
     }
-    $queryMovieName = $db->prepare("SELECT * FROM movies WHERE name LIKE :name");
+    $queryMovieName = $db->prepare("SELECT movies.*, AVG(advices.rating) as avg_rating 
+    FROM movies 
+    LEFT JOIN advices ON advices.movie_id = movies.id
+    WHERE name LIKE :name
+    GROUP BY movies.id");
     try {
         $queryMovieName->execute(['name'=> "%$name%"]);
         $movieData = $queryMovieName->fetchAll(PDO::FETCH_ASSOC);
