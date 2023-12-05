@@ -17,23 +17,22 @@ function createResponse($status, $message, $data = [])
 // Retrouver le rating pour un utilisateur et un film donné
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-    if (isset ($_GET['movieName'])) {
-        $name = $_GET['movieName'];
+    if (isset ($_GET['movie_id'])) {
+        $id = $_GET['movie_id'];
     }
     else {
-        echo createResponse("400", "No email submitted");
+        echo createResponse("400", "No movie name submitted");
         exit;
     }
 
-    $queryId = $db->prepare("SELECT id FROM users WHERE id = :id");
-    $queryId->execute(['id' => $user_id]);
-    $queryIDresult = $queryId->fetchAll(PDO::FETCH_ASSOC);
-    if (!$queryIDresult) {
-        echo createResponse("401", "Your email doesn't exist");
+    $queryMovieId = $db->prepare("SELECT id FROM movies WHERE id = :id");
+    $queryMovieId->execute(['id' => $id]);
+    $movieId = $queryMovieId->fetchAll(PDO::FETCH_ASSOC);
+    if (!$movieId) {
+        echo createResponse("401", "No movie with that ID");
     } else {
-        $queryGet = $db->prepare("SELECT
-    users.email,
+        $queryGetRating = $db->prepare("SELECT
+    movies.id,
     movies.author,
     movies.genre,
     movies.image,
@@ -41,17 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     movies.name,
     movies.resume,
     movies.year,
-    advices.rating
+    AVG(advices.rating) as avg_rating
 FROM
     advices
 JOIN
-    users ON advices.user_id = users.id
-JOIN
     movies ON advices.movie_id = movies.id
-WHERE users.id = :user_id AND movies.id = :movie_id");
+WHERE movies.id = :id
+GROUP BY advices.movie_id");
         try {
-            $queryGet->execute(["user_id" => $user_id, "movie_id"=> $movie_id]);
-            $ratingMovie = $queryGet->fetchAll(PDO::FETCH_ASSOC);
+            $queryGetRating->execute(["id" => $id]);
+            $ratingMovie = $queryGetRating->fetchAll(PDO::FETCH_ASSOC);
             if ($ratingMovie) {
                 echo createResponse('200', 'Successful operation', $ratingMovie);
             } else {
