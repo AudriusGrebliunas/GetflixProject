@@ -46,7 +46,7 @@
       const user_id = document.getElementById('user_id').value;
       const movie_id = document.getElementById('movie_id').value;
 
-      axios.get(`http://localhost/rating/rating.php`, {
+      axios.get(`http://localhost:8080/rating/rating.php`, {
         params: {
           user_id: user_id,
           movie_id: movie_id,
@@ -57,7 +57,7 @@
       })
       .catch(function (error) {
         console.log(error);
-      });
+      });   
     }
 
     function putData() {
@@ -65,7 +65,7 @@
       const movie_id = document.getElementById('movie_id').value;
       const rating = document.getElementById('rating').value;
 
-      axios.put(`http://localhost/rating/rating.php`, {
+      axios.put(`http://localhost:8080/rating/rating.php`, {
         user_id: user_id,
         movie_id: movie_id,
         rating: rating
@@ -82,7 +82,7 @@
       const user_id = document.getElementById('user_id').value;
       const movie_id = document.getElementById('movie_id').value;
 
-      axios.delete(`http://localhost/rating/rating.php`, {
+      axios.delete(`http://localhost:8080/rating/rating.php`, {
         params: {
           user_id: user_id,
           movie_id: movie_id,

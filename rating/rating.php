@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $queryVerification->execute(["user_id" => $user_id, "movie_id" => $movie_id]);
     $queryVerificationResult = $queryVerification->fetch(PDO::FETCH_ASSOC);
     if (!$queryVerificationResult) {
-        echo createResponse('Error 402', "This rating does not exist", $queryVerificationResults);
+        echo createResponse('Error 402', "This rating does not exist", $data);
         exit;
     }
     $queryAdd = $db->prepare("UPDATE advices SET rating = :rating WHERE user_id = :user_id AND movie_id = :movie_id");
