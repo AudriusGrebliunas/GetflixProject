@@ -41,11 +41,14 @@ curl_close($curl);
 if ($err) {
   echo "cURL Error #:" . $err;
 } else {
-  echo $responseAPI;
-  echo createResponse(200,'Here is your result', $responseAPI);
-}
+
+
 
 //Create Response
+$responseDecoded = json_decode($responseAPI, true);
+echo createResponse(200,'Here is your result', $responseDecoded);
+}
+
 function createResponse($status, $message, $data = [])
 {
     $response = [
