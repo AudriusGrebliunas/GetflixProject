@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Form with Axios</title>
+    <!-- Include Axios library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Get all movies by genre</h1>
+
+    <form id="genreSubmitForm">
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre">
+            <option value="28">Action</option>
+            <option value="12">Adventure</option>
+            <option value="16">Animation</option>
+            <option value="35">Comedy</option>
+            <option value="80">Crime</option>
+            <option value="99">Documentary</option>
+            <option value="18">Drama</option>
+            <option value="10751">Family</option>
+            <option value="14">Fantasy</option>
+            <option value="36">History</option>
+            <option value="27">Horror</option>
+            <option value="10402">Music</option>
+            <option value="9648">Mystery</option>
+            <option value="10749">Romance</option>
+            <option value="878">Science Fiction</option>
+            <option value="10770">TV Movie</option>
+            <option value="53">Thriller</option>
+            <option value="10752">War</option>
+            <option value="37">Western</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display Results -->
+    <div id="searchResults"></div>
+
+    <script>
+        // Event listener for form submission
+        document.getElementById('genreSubmitForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the search query
+            const selectedGenre = document.querySelector('#genre').value;
+
+            // Make Axios GET request
+            axios.get(`http://localhost:8080/movies/getAllMoviesByGenre.php?selectedGenre=${selectedGenre}`)
+                .then(function (response) {
+                    // Display search results
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.error('Error fetching data:', error);
+                });
+        });
+    </script>
+
+</body>
+
+</html>
