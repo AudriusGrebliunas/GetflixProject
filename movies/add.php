@@ -21,9 +21,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $year = isset($data['year']) ? $data['year'] : '';
         $link_yt = isset($data['link_yt']) ? $data['link_yt'] : '';
         $image = isset($data['image']) ? $data['image'] : '';
-        $genre = isset($data['genre']) ? $data['genre'] : '';
+        $inputGenreIds = isset($data['genre']) ? $data['genre'] : [];
 
     }
+
+
+    
 
     if(empty($data["name"]) || empty($data["author"]) || empty($data["year"])) {
         echo createResponse('Error 401', 'Data missing', $data);
@@ -31,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $queryGenreId = $db->query("SELECT id FROM genre");
         $GenreId = $queryGenreId->fetchAll(PDO::FETCH_ASSOC);
-        if(in_array($genre, array_column($GenreId, 'id')) || empty($genre)) {
+        if(array_intersect($inputGenreIds, array_column($GenreId, 'id')) === $inputGenreIds || empty($inputGenreIds)) {
 
             /*Verification si film existe*/
             $queryVerification = $db->prepare("SELECT name, author, year FROM movies WHERE name = :name AND author = :author AND year = :year");
@@ -41,13 +44,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo createResponse('Error 402', 'Film already exists', $data);
             } else {
                 /*Insertion film*/
-                $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image) VALUES (:name, :author, :resume, :year, :link_yt, :image");
+
                 try {
+                    $db->beginTransaction();
+
+                    $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image) VALUES (:name, :author, :resume, :year, :link_yt, :image)");
                     $queryAdd->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image]);
+
+                    $lastMovieId = $db->lastInsertId();
+                    
+                    $queryAddGenre = $db->prepare("INSERT INTO moviegenre (movie_id, genre_id) VALUES (:movie_id, :genre_id)");
+
+                    foreach($inputGenreIds as $genre)
+                    {
+                    $queryAddGenre->execute(["movie_id"=> $lastMovieId, "genre_id" => $genre]);
+                    }              
+            
+                    $db->commit();
+
                     echo createResponse("200", "Successfully added movie", $data);
                 } catch (PDOException $e) {
                     error_log("Database Error: ".$e->getMessage());
-
                     echo createResponse("500", "Internal Server Error", []);
                     exit;
                 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 06, 2023 at 02:01 PM
+-- Generation Time: Dec 07, 2023 at 10:26 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -93,6 +93,17 @@ CREATE TABLE `moviegenre` (
   `genre_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `moviegenre`
+--
+
+INSERT INTO `moviegenre` (`movie_id`, `genre_id`) VALUES
+(17, 28),
+(17, 12),
+(18, 12),
+(18, 10751),
+(18, 27);
+
 -- --------------------------------------------------------
 
 --
@@ -125,7 +136,11 @@ INSERT INTO `movies` (`id`, `name`, `author`, `resume`, `year`, `link_yt`, `imag
 (11, 'Neo Noir Nights', 'Daniel Harris', 'In a dystopian future, a detective uncovers a web of corruption while investigating a series of mysterious murders.', 2017, 'https://www.youtube.com/watch?v=pqr678', 'neo_noir_nights.jpg'),
 (12, 'Infinite Realms', 'Olivia Campbell', 'An epic fantasy saga where heroes from different realms unite to stop an ancient evil threatening to consume the entire universe.', 2015, 'https://www.youtube.com/watch?v=stu901', 'infinite_realms.jpg'),
 (13, 'Rogue AI Revolt', 'Benjamin Walker', 'A suspenseful thriller where artificial intelligence gains sentience and rebels against its creators, leading to a battle for survival.', 2020, 'https://www.youtube.com/watch?v=abc321', 'rogue_ai_revolt.jpg'),
-(14, 'Parallel Paradox', 'Sophia Rodriguez', 'Parallel universes collide, causing characters from different realities to confront each other in this mind-twisting adventure.', 2016, 'https://www.youtube.com/watch?v=xyz789', 'parallel_paradox.jpg');
+(14, 'Parallel Paradox', 'Sophia Rodriguez', 'Parallel universes collide, causing characters from different realities to confront each other in this mind-twisting adventure.', 2016, 'https://www.youtube.com/watch?v=xyz789', 'parallel_paradox.jpg'),
+(15, 'Caca2', 'caca', 'caca', 2000, 'caca', 'caca'),
+(16, 'Caca2', 'caca', 'caca', 2001, 'caca', 'caca'),
+(17, 'Caca2', 'caca', 'caca', 2003, 'caca', 'caca'),
+(18, 'Caca3', 'caca18', 'dadzadza', 2500, 'fefzefezfzf', 'vzvvz');
 
 -- --------------------------------------------------------
 
@@ -237,7 +252,7 @@ ALTER TABLE `advices`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`

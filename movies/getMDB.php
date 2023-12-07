@@ -156,7 +156,8 @@ if ($err) {
                 'resume'=>$overview,
                 'year'=>$release,
                 'link_yt'=>$YouTubeLink,
-                'image'=>$url_poster
+                'image'=>$url_poster,
+                'genre'=>$genre
                 ];
             $moviesData[] = $movieData;
         }
