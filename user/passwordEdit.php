@@ -3,12 +3,24 @@
 include '../db_connect.php';
 include '../request_config.php';
 
+function createResponse($status, $message, $data = [])
+{
+    $response = [
+        'status' => $status,
+        'message' => $message,
+        'data' => $data
+    ];
+    return json_encode($response);
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $rawData = file_get_contents('php://input');
     $data = json_decode(($rawData), true);
 
     if ($data) {
         $password= isset($data['password']) ? $data['password'] : '';
+        $email= isset($data['email']) ? $data['email'] :'';
     }
 
     if (empty($data["password"])) {
@@ -16,13 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         exit;
     }
     else {
-        $queryRegister = $db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob, password = :password WHERE email = :email");
+        $password = password_hash(
+            $password,
+            PASSWORD_ARGON2ID,
+            [
+                'memory_cost' => 2048,
+                'time_cost'   => 4,
+                'threads'     => 2,
+            ]
+        );
+        $queryPassword = $db->prepare("UPDATE users SET password = :password WHERE email = :email");
         try {
-            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
+            $queryPassword->execute(["email" => $email, "password" => $password]);
             echo createResponse("200", "Successfully modified user data");
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
-
             echo createResponse("503", "Internal Server Error");
             exit;
         }
