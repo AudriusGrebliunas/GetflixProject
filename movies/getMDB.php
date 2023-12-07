@@ -42,7 +42,6 @@ if ($err) {
     $responseDecoded = json_decode($responseAPI, true);
 
     if (isset($responseDecoded['results'])) {
-        //$poster_paths = [];
         $url_poster = [];
         $releases = [];
         $x=0;

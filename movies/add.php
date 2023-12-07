@@ -3,8 +3,7 @@
 include '../db_connect.php';
 include '../request_config.php';
 
-function createResponse($status, $message, $data = [])
-{
+function createResponse($status, $message, $data = []) {
     $response = [
         'status' => $status,
         'message' => $message,
@@ -13,9 +12,9 @@ function createResponse($status, $message, $data = [])
     return json_encode($response);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    if ($data) {
+    if($data) {
         $name = isset($data['name']) ? $data['name'] : '';
         $author = isset($data['author']) ? $data['author'] : '';
         $resume = isset($data['resume']) ? $data['resume'] : '';
@@ -23,23 +22,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $link_yt = isset($data['link_yt']) ? $data['link_yt'] : '';
         $image = isset($data['image']) ? $data['image'] : '';
         $genre = isset($data['genre']) ? $data['genre'] : '';
-        
+
     }
 
-    if (empty($data["name"]) || empty($data["author"]) || empty($data["resume"]) || empty($data["year"]) || empty($data["link_yt"]) || empty($data["image"]) || empty($data["genre"])) {
+    if(empty($data["name"]) || empty($data["author"]) || empty($data["year"])) {
         echo createResponse('Error 401', 'Data missing', $data);
         exit;
-    }
-         else {
-        $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image, genre) VALUES (:name, :author, :resume, :year, :link_yt, :image, :genre)");
-        try {
-            $queryAdd->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image, "genre"=> $genre]);
-            echo createResponse("200", "Successfully added movie", $data);
-        } catch (PDOException $e) {
-            error_log("Database Error: " . $e->getMessage());
+    } else {
+        $queryGenreId = $db->query("SELECT id FROM genre");
+        $GenreId = $queryGenreId->fetchAll(PDO::FETCH_ASSOC);
+        if(in_array($genre, array_column($GenreId, 'id')) || empty($genre)) {
 
-            echo createResponse("500", "Internal Server Error", []);
-            exit;
+            /*Verification si film existe*/
+            $queryVerification = $db->prepare("SELECT name, author, year FROM movies WHERE name = :name AND author = :author AND year = :year");
+            $queryVerification->execute(["name" => $name, "author" => $author, "year" => $year]);
+            $queryVerificationResults = $queryVerification->fetchAll(PDO::FETCH_ASSOC);
+            if($queryVerificationResults) {
+                echo createResponse('Error 402', 'Film already exists', $data);
+            } else {
+                /*Insertion film*/
+                $queryAdd = $db->prepare("INSERT INTO movies (name, author, resume, year, link_yt, image) VALUES (:name, :author, :resume, :year, :link_yt, :image");
+                try {
+                    $queryAdd->execute(["name" => $name, "author" => $author, "resume" => $resume, "year" => $year, "link_yt" => $link_yt, "image" => $image]);
+                    echo createResponse("200", "Successfully added movie", $data);
+                } catch (PDOException $e) {
+                    error_log("Database Error: ".$e->getMessage());
+
+                    echo createResponse("500", "Internal Server Error", []);
+                    exit;
+                }
+            }
+        }
+        else {
+            echo createResponse("407","Genre doesn't exist", $GenreId);
         }
     }
 }
