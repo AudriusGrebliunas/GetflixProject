@@ -51,7 +51,7 @@
             const selectedGenre = document.querySelector('#genre').value;
 
             // Make Axios GET request
-            axios.get(`http://localhost:8080/movies/getAllMoviesByGenre.php?selectedGenre=${selectedGenre}`)
+            axios.get(`http://localhost/movies/getAllMoviesByGenre.php?selectedGenre=${selectedGenre}`)
                 .then(function (response) {
                     // Display search results
                     console.log(response.data);

@@ -21,9 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dob = isset($data['dob']) ? $data['dob'] : '';
         $email = isset($data['email']) ? $data['email'] : '';
         $password = isset($data['password']) ? $data['password'] : '';
+        $question = isset($data['question']) ? $data['question'] : '';
+        $questionAnswer = isset($data['questionAnswer']) ? $data['questionAnswer'] : '';
     }
 
-    if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
+    if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"] || empty($data['question']) || empty($data['questionAnswer']))) {
         echo createResponse('Error 401', 'Data missing');
         exit;
     }
@@ -44,10 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'threads'     => 2,
         ]
     );
+    $questionAnswer = password_hash(
+        $password,
+        PASSWORD_ARGON2ID,
+        [
+            'memory_cost' => 2048,
+            'time_cost'   => 4,
+            'threads'     => 2,
+        ]
+    );
      
-        $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password) VALUES (:first_name, :last_name, :address, :email, :dob, :password)");
+        $queryRegister = $db->prepare("INSERT INTO users (first_name, last_name, address, email, dob, password, question, questionanswer) VALUES (:first_name, :last_name, :address, :email, :dob, :password, :question, :questionanswer)");
         try {
-            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
+            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password, "question"=> $question, ":questionanswer"=> $questionAnswer]);
             echo createResponse("200", "Successfully registered");
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());

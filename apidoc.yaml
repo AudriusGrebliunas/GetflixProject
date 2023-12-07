@@ -199,6 +199,60 @@ paths:
           description: Data Missing
         '500':
           description: Internal Server Error
+  /movies/getBO.php:
+    get:
+      tags:
+        - movies
+      summary: Get movie by Moviename from MovieDB & DB 
+      description: ''
+      operationId: getMovieFromMDB
+      parameters:
+        - name: q
+          in: query
+          description: The name that needs to be fetched. Use movie1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'SUCCESS: Movie(s) successfully retrieved'
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/Movie'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
+  /movies/getAllMoviesByGenre.php:
+    get:
+      tags:
+        - movies
+      summary: Get movie by genre 
+      description: ''
+      operationId: getMovieByGenre
+      parameters:
+        - name: selectedGenre
+          in: query
+          description: The id that needs to be fetched.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'SUCCESS: Movie(s) successfully retrieved'
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/MovieWithId'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
   /movies/movie.php:
     get:
       tags:
@@ -207,7 +261,7 @@ paths:
       description: ''
       operationId: getMovieByName
       parameters:
-        - name: movieName
+        - name: q
           in: query
           description: The name that needs to be fetched. Use movie1 for testing.
           required: true
@@ -313,16 +367,12 @@ paths:
                   description: email of the user
       responses:
         '200':
-          description: '{movie} successfully added to your wishlist on {status}'
+          description: 'Successfully added to wishlist'
         '401':
           description: Data Missing
-        '402':
-          description: User not found
-        '404':
-          description: Couldn't update, data missing
         '500':
           description: Internal Server Error
-  /wishlist/{email}.php:
+  /wishlist/wishlist.php:
     get:
       tags:
         - wishlist
@@ -331,7 +381,7 @@ paths:
       operationId: getWishlistByUser
       parameters:
         - name: email
-          in: path
+          in: query
           description: >-
             The user email that needs to be fetched. Use email@example.com for
             testing.
@@ -354,8 +404,13 @@ paths:
                     status:
                       type: string
                       description: The status on the wishlist
+                    email:
+                     type: string
+                     description: User email
         '400':
-          description: Email not found. Do you have any movie in your wishlist?
+          description: No email submited
+        '401':
+          description: Your email doesn't exist
         '500':
           description: Internal server error
   /wishlist/modifyWishlist.php:
@@ -614,22 +669,28 @@ components:
   schemas:
     UserWithId:
       allOf:
+        - $ref: '#/components/schemas/User'
         - type: object
           properties:
             id:
               type: integer
               format: int64
               description: The user's ID.
-        - $ref: '#/components/schemas/User'
+      xml:
+        name: userWithId
+
     MovieWithId:
       allOf:
+        - $ref: '#/components/schemas/Movie'
         - type: object
           properties:
             id:
               type: integer
               format: int64
-              description: The user's ID.
-        - $ref: '#/components/schemas/Movie'
+              description: The movie's ID.
+      xml:
+        name: movieWithId
+
     User:
       type: object
       properties:
@@ -655,6 +716,7 @@ components:
           example: 12345%+de
       xml:
         name: user
+
     Movie:
       type: object
       properties:
@@ -683,11 +745,12 @@ components:
           example: https://www.urldemonimage.com/lien
           description: The URL of the movie's image
         genre:
-          type: string
-          example: serious movie
-          description: The genre of the movie
+          $ref: '#/components/parameters/GenreParameter'
       required:
         - name
+      xml:
+        name: movie
+
     Wishlist:
       type: object
       properties:
@@ -700,6 +763,8 @@ components:
         Status:
           type: integer
           example: 1
+      xml:
+        name: wishlist
     Rating:
       type: object
       properties:
@@ -712,6 +777,7 @@ components:
         rating:
           type: number
           example: 4.5
+
     Tag:
       type: object
       properties:
@@ -722,6 +788,7 @@ components:
           type: string
       xml:
         name: tag
+
     ApiResponse:
       type: object
       properties:
@@ -732,3 +799,54 @@ components:
           type: string
         message:
           type: string
+
+  parameters:
+   GenreParameter:
+    name: genre
+    in: query
+    description: The genre of the movie
+    required: true
+    schema:
+      type: array
+      items:
+        type: integer
+        oneOf:
+          - const: "28"
+            description: "Action"
+          - const: "12"
+            description: "Adventure"
+          - const: "16"
+            description: "Animation"
+          - const: "35"
+            description: "Comedy"
+          - const: "80"
+            description: "Crime"
+          - const: "99"
+            description: "Documentary"
+          - const: "18"
+            description: "Drama"
+          - const: "10751"
+            description: "Family"
+          - const: "14"
+            description: "Fantasy"
+          - const: "36"
+            description: "History"
+          - const: "27"
+            description: "Horror"
+          - const: "10402"
+            description: "Music"
+          - const: "9648"
+            description: "Mystery"
+          - const: "10749"
+            description: "Romance"
+          - const: "878"
+            description: "Science Fiction"
+          - const: "10770"
+            description: "TV Movie"
+          - const: "53"
+            description: "Thriller"
+          - const: "10752"
+            description: "War"
+          - const: "37"
+            description: "Western"
+         

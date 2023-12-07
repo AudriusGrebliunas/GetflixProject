@@ -36,6 +36,18 @@
             <input type="password" id="password" required>
         </div>
         <div>
+            <label for="secret_question">Secret Question:</label>
+            <select id="secret_question" required>
+                <option value="1">What is your mother's maiden name?</option>
+                <option value="2">In what city were you born?</option>
+                <option value="3">What is your favorite color?</option>
+            </select>
+        </div>
+        <div>
+            <label for="secret_answer">Secret Answer:</label>
+            <input type="text" id="secret_answer" required>
+        </div>
+        <div>
             <button type="submit">Register</button>
         </div>
     </form>
@@ -50,20 +62,23 @@
             var dob = document.getElementById("birthday").value;
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
+            var secret_question = document.getElementById("secret_question").value;
+            var secret_answer = document.getElementById("secret_answer").value;
 
-
-            if (!email || !password || !first_name || !last_name || !address || !dob || !email) {
+            if (!email || !password || !first_name || !last_name || !address || !dob || !secret_question || !secret_answer) {
                 alert("Your form is missing data");
                 return;
             }
 
-            axios.post('http://localhost:8080//user/register.php', {
+            axios.post('http://localhost/user/register.php', {
                 email: email,
                 password: password,
-                first_name : first_name,
-                last_name : last_name,
+                first_name: first_name,
+                last_name: last_name,
                 address: address,
-                dob: dob
+                dob: dob,
+                questionanswer: secret_answer,
+                question: secret_question
             })
                 .then(function (response) {
                     console.log(response.data);
@@ -71,8 +86,7 @@
                 })
                 .catch(function (error) {
                     console.error("Register failed:", error);
-                }
-                );
+                });
         }
     </script>
 
