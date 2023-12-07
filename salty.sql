@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 07, 2023 at 10:26 AM
+-- Generation Time: Dec 07, 2023 at 01:36 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -156,18 +156,20 @@ CREATE TABLE `users` (
   `email` text NOT NULL,
   `dob` date NOT NULL,
   `password` text NOT NULL,
-  `deleted` tinyint(1) DEFAULT '0'
+  `deleted` tinyint(1) DEFAULT '0',
+  `questionanswer` text NOT NULL,
+  `question` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `address`, `email`, `dob`, `password`, `deleted`) VALUES
-(5, 'Exemple', 'Exemple', 'Exemple', 'Exemple@exemple.com', '2000-01-01', 'Exemple', 1),
-(6, 'Audrius', 'Grebliunas', 'Rue Pierre Flamand', 'audrius.grebliunas@gmail.com', '2000-12-05', 'audriusg', 1),
-(7, 'caca', 'ccaca', 'caca', 'test@test.com', '2023-12-04', 'caca', 1),
-(8, 'test2', 'test2', 'test2', 'test2@gmail.com', '2023-12-13', 'test2', 1);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `address`, `email`, `dob`, `password`, `deleted`, `questionanswer`, `question`) VALUES
+(5, 'Exemple', 'Exemple', 'Exemple', 'Exemple@exemple.com', '2000-01-01', 'Exemple', 1, '', 0),
+(6, 'Audrius', 'Grebliunas', 'Rue Pierre Flamand', 'audrius.grebliunas@gmail.com', '2000-12-05', 'audriusg', 1, '', 0),
+(7, 'caca', 'ccaca', 'caca', 'test@test.com', '2023-12-04', 'caca', 1, '', 0),
+(9, 'Gwendoline', 'Jacobs', 'Rue Catherine de Savoie 17', 'gwendolinejacobs1@gmail.com', '2023-12-05', '$argon2id$v=19$m=2048,t=4,p=2$aHc5NkxtS25tbzFYaklOTQ$0IF8pdS3xhJMDuuEq0DSfQC5hD/9V5daYoCnHpK894w', 0, '$argon2id$v=19$m=2048,t=4,p=2$YkxoTGlOZmJ4Z3pRa0NNaw$xAFFwzYvWzN3TUEcG/tDmLpXxqWNPv5M3XOm/R6uaSQ', 1);
 
 -- --------------------------------------------------------
 
@@ -258,7 +260,7 @@ ALTER TABLE `movies`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
