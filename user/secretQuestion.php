@@ -38,6 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo createResponse("200", "SUCCESS.");
         exit;
     } else {
-        echo createResponse("400", "WRONG ANSWER OR WRONG");
+        echo createResponse("400", "WRONG ANSWER");
     }
 }
