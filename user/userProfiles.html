@@ -20,7 +20,7 @@
         function submitForm(event) {
             event.preventDefault();
 
-            axios.get('http://localhost:8080/user/getAllUsers.php', {
+            axios.get('http://localhost:8080/user/userProfiles.php', {
             })
                 .then(function (response) {
                     console.log(response.status);
