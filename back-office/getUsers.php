@@ -36,28 +36,48 @@ include 'navbar.php';
 <footer class="fixed-bottom text-center py-3" style="background-color: #007bff; color: #fff;">
     <p>&copy; 2023 Your Company. All rights reserved.</p>
 </footer>
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var data = [
-            { 'id': 1, 'name': 'John Doe', 'email': 'john@example.com', 'address': '123 Main St' },
-            { 'id': 2, 'name': 'Jane Doe', 'email': 'jane@example.com', 'address': '456 Oak St' },
+    let users;
+        function getAllUsers() {
 
-        ];
+            axios.get('http://localhost:8080/user/userProfiles.php', {
+            })
+                .then(function (response) {
+                    console.log(response.status);
+                    console.log(response.message);
+                    console.log(response.data);
+                    users = data;
+                })
+                .catch(function (error) {
+                    console.log(response.status);
+                    console.log(response.message);
+                    console.log(response.data);
+                }
+                
+                );
+        }
+        getAllUsers();
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     var data = [
+    //         { 'id': 1, 'name': 'John Doe', 'email': 'john@example.com', 'address': '123 Main St' },
+    //         { 'id': 2, 'name': 'Jane Doe', 'email': 'jane@example.com', 'address': '456 Oak St' },
+
+    //     ];
 
         var tbody = document.getElementById('dataTableBody');
-        data.forEach(function (row) {
+        users.forEach(function (row) {
             var tr = document.createElement('tr');
             tr.innerHTML = '<td>' + row['email'] + '</td>' +
-                '<td>' + row['name'] + '</td>' +
-                '<td></td>' + 
+                '<td>' + row['first_name'] + '</td>' +
+                '<td>' + row['last_name'] + '</td>' + 
                 '<td>' + row['address'] + '</td>' +
-                '<td></td>' + 
+                '<td>' + row['dob'] + '</td>' +
+/////
                 '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="editRow(' + row['id'] + ')"><i class="fas fa-edit"></i> Edit</button>' +
                 '<button class="btn btn-danger btn-sm" onclick="deleteRow(' + row['id'] + ')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
             tbody.appendChild(tr);
         });
-    });
 
     function editRow(id) {
         console.log('Editing row with ID ' + id);
