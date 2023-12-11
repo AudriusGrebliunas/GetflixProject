@@ -24,71 +24,180 @@ include 'navbar.php';
                 <th>Last Name</th>
                 <th>Address</th>
                 <th>Date of birth</th>
-                <th>Secret question</th>
+                <th>Actions</th>
+
             </tr>
         </thead>
         <tbody id="dataTableBody">
         </tbody>
     </table>
 </div>
+<button id="myBtn">Open Modal</button>
+<div id="myModal" class="modal" style="  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 999;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */">
 
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" style="  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  width: 20px;
+  ">&times;</span>
+        <form onsubmit="submitForm(event)">
+            <input type="email" required id="email" disabled>
+            <input type="text" required id="first_name">
+            <input type="text" required id="last_name">
+            <input type="text" required id="address">
+            <input type="date" required id="date-of-birth">
+            <button type="submit">Submit data</button>
+        </form>
+    </div>
+
+</div>
 
 <footer class="fixed-bottom text-center py-3" style="background-color: #007bff; color: #fff;">
     <p>&copy; 2023 Your Company. All rights reserved.</p>
 </footer>
 <script>
     let users;
-        function getAllUsers() {
 
-            axios.get('http://localhost:8080/user/userProfiles.php', {
+    function getAllUsers() {
+
+        axios.get('http://localhost:8080/user/userProfiles.php', {})
+            .then(function(response) {
+                console.log(response.status);
+                console.log(response.message);
+                console.log(response.data);
+                users = response.data.data;
+                populateUsers();
             })
-                .then(function (response) {
-                    console.log(response.status);
-                    console.log(response.message);
-                    console.log(response.data);
-                    users = data;
-                })
-                .catch(function (error) {
+            .catch(function(error) {
                     console.log(response.status);
                     console.log(response.message);
                     console.log(response.data);
                 }
-                
-                );
-        }
-        getAllUsers();
 
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     var data = [
-    //         { 'id': 1, 'name': 'John Doe', 'email': 'john@example.com', 'address': '123 Main St' },
-    //         { 'id': 2, 'name': 'Jane Doe', 'email': 'jane@example.com', 'address': '456 Oak St' },
+            );
+    }
+    getAllUsers();
 
-    //     ];
-
+    function populateUsers() {
         var tbody = document.getElementById('dataTableBody');
-        users.forEach(function (row) {
+        users.forEach(function(row) {
             var tr = document.createElement('tr');
             tr.innerHTML = '<td>' + row['email'] + '</td>' +
                 '<td>' + row['first_name'] + '</td>' +
-                '<td>' + row['last_name'] + '</td>' + 
+                '<td>' + row['last_name'] + '</td>' +
                 '<td>' + row['address'] + '</td>' +
                 '<td>' + row['dob'] + '</td>' +
-/////
-                '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="editRow(' + row['id'] + ')"><i class="fas fa-edit"></i> Edit</button>' +
-                '<button class="btn btn-danger btn-sm" onclick="deleteRow(' + row['id'] + ')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
+
+                '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
             tbody.appendChild(tr);
         });
-
-    function editRow(id) {
-        console.log('Editing row with ID ' + id);
     }
 
-    function deleteRow(id) {
-        console.log('Deleting row with ID ' + id);
+    function deleteUser(email) {
+        axios.delete('http://localhost:8080/user/userProfile.php', {
+                params: {
+                    email: email
+                }
+            })
+            .then(function(response) {
+                console.log(response.status);
+                console.log(response.message);
+                console.log(response.data);
+                alert("Return successful!");
+                var tbody = document.getElementById('dataTableBody');
+                tbody.innerHTML = '';
+                location.reload()
+            })
+            .catch(function(error) {
+                console.error("Return failed:", error);
+            });
     }
 
-    function search() {
-        console.log('Searching...');
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+
+
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let userObject;
+
+    function populateModal(email) {
+        modal.style.display = "block";
+        //     let email = "audrius.grebliunas@gmail.com"
+        userObject = users.find(item => item.email === email);
+        document.getElementById("first_name").value = userObject["first_name"]
+        document.getElementById("last_name").value = userObject["last_name"]
+        document.getElementById("address").value = userObject["address"]
+        document.getElementById("date-of-birth").value = userObject["dob"]
+        document.getElementById("email").value = userObject["email"]
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+        var email = document.getElementById("email").value;
+        var first_name = document.getElementById("first_name").value;
+        var last_name = document.getElementById("last_name").value;
+        var address = document.getElementById("address").value;
+        var dob = document.getElementById("date-of-birth").value;
+
+        if (first_name && last_name && address && dob && email) {
+            axios.put('http://localhost:8080/user/userProfile.php', {
+                    // data:
+                    // {
+                    email: email,
+                    first_name: first_name,
+                    last_name: last_name,
+                    address: address,
+                    dob: dob
+                    // }
+                })
+                .then(function(response) {
+                    console.log(response.data);
+                    location.reload()
+
+                })
+                .catch(function(error) {
+                    console.error("Return not succesful:", error);
+                });
+        }
+
+
+
     }
 </script>
 

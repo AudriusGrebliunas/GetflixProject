@@ -1,50 +1,100 @@
 body {
-    padding-top: 70px;
-    background-color: #f8f9fa;
-  }
+  padding-top: 70px;
+  background-color: #f8f9fa;
+}
 
-  .container {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+.container {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  h2 {
-    color: #007bff;
-  }
+h2 {
+  color: #007bff;
+}
 
-  table {
-    width: 100%;
-  }
+table {
+  width: 100%;
+}
 
-  th, td {
-    text-align: center;
-  }
+th,
+td {
+  text-align: center;
+}
 
-  th {
-    background-color: #007bff;
-    color: #fff;
-  }
+th {
+  background-color: #007bff;
+  color: #fff;
+}
 
-  tbody tr:hover {
-    background-color: #f8d7da;
-  }
+tbody tr:hover {
+  background-color: #f8d7da;
+}
 
-  .action-buttons {
-    display: flex;
-    justify-content: space-around;
-  }
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+}
 
-  .navbar {
-    background-color: #007bff;
-  }
+.navbar {
+  background-color: #007bff;
+}
 
-  .navbar-brand,
-  .navbar-nav .nav-link {
-    color: #fff !important;
-  }
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: #fff !important;
+}
 
-  .navbar-toggler-icon {
-    background-color: #fff;
-  }
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  width: 20px;
+  background-color: blue;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
