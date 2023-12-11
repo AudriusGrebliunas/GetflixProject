@@ -40,18 +40,18 @@ include 'navbar.php';
     let users;
         function getAllUsers() {
 
-            axios.get('http://localhost:8080/user/userProfiles.php', {
+            axios.get('http://localhost/user/userProfiles.php', {
             })
                 .then(function (response) {
-                    console.log(response.status);
-                    console.log(response.message);
-                    console.log(response.data);
-                    users = data;
+                    //console.log(response.status);
+                    //console.log(response.message);
+                    console.log(response.data.data);
+                    users = response.data.data;
                 })
                 .catch(function (error) {
-                    console.log(response.status);
-                    console.log(response.message);
-                    console.log(response.data);
+                    //console.log(response.status);
+                    //console.log(response.message);
+                    console.log(response.data.data);
                 }
                 
                 );

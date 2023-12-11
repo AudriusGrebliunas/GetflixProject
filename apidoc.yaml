@@ -12,7 +12,7 @@ externalDocs:
   description: Find out more about our project!
   url: https://github.com/AudriusGrebliunas/GetflixProject
 servers:
-  - url: localhost
+  - url: https://saltybecode2.000webhostapp.com
 tags:
   - name: user
     description: Operations about user
@@ -280,6 +280,28 @@ paths:
           description: 'ERROR: No movie(s) found with that name'
         '500':
           description: 'FAILURE: Internal Server Error'
+  /movies/getAllMovies.php:
+    get:
+      tags:
+        - movies
+      summary: Get all movies
+      description: ''
+      operationId: getMovies
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieWithId'
+        '400':
+          description: Invalid request
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal Error Server
   /movies/getAllMoviesByGenre.php:
     get:
       tags:

@@ -14,7 +14,7 @@ include 'navbar.php';
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <h2>Back Office Table</h2>
     <table id="dataTable" class="table table-bordered table-hover">
         <thead>
@@ -35,7 +35,7 @@ include 'navbar.php';
 </div>
 
 
-<footer class="fixed-bottom text-center py-3" style="background-color: #007bff; color: #fff;">
+<footer class="fixed-bottom text-center py-2" style="background-color: #007bff; color: #fff;">
     <p>&copy; 2023 Salty. All rights reserved.</p>
 </footer>
 
@@ -58,9 +58,9 @@ include 'navbar.php';
                         '<td>' + row['author'] + '</td>' +
                         '<td>' + row['resume'] + '</td>' +
                         '<td>' + row['year'] + '</td>' +
-                        '<td><a href="' + row['link_yt'] + '">' + row['link_yt'] + '</a></td>' +
+                        '<td><a href="' + row['link_yt'] + '" target="_blank">' + row['link_yt'] + '</a></td>' +
                         '<td><img src="' + row['image'] + '"/></td>' +
-                        '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="editRow(' + row['id'] + ')"><i class="fas fa-edit"></i> Edit</button>' +
+                        '<td class="action-buttons" style="width: 200px"><button class="btn btn-primary btn-sm" onclick="editRow(' + row['id'] + ')"><i class="fas fa-edit"></i> Edit</button>' +
                         '<button class="btn btn-danger btn-sm" onclick="deleteRow(' + row['id'] + ')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
                     tbody.appendChild(tr);
                 });
