@@ -55,7 +55,7 @@ include 'navbar.php';
   /* Black w/ opacity */">
 
     <!-- Modal content -->
-    <div class="modal-content">
+    <!-- <div class="modal-content">
         <span class="close" style="  color: #aaaaaa;
   float: right;
   font-size: 28px;
@@ -70,7 +70,19 @@ include 'navbar.php';
             <input type="date" required id="date-of-birth">
             <button type="submit">Submit data</button>
         </form>
+    </div> -->
+    <div class="modal-content" style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <span class="close" style="color: #aaaaaa; float: right; font-size: 28px; font-weight: bold;">&times;</span>
+        <form onsubmit="submitForm(event)" style="display: grid; gap: 10px;">
+            <input type="email" required id="email" disabled style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="first_name" placeholder="First Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="last_name" placeholder="Last Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="address" placeholder="Address" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="date" required id="date-of-birth" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button type="submit" style="padding: 10px; border-radius: 5px; border: none; background-color: #3498db; color: white; cursor: pointer;">Submit data</button>
+        </form>
     </div>
+
 
 </div>
 
