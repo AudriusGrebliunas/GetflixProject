@@ -18,7 +18,7 @@ function createResponse($status, $message, $data = [])
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 
-    $queryAllMovies = $db->query("SELECT * EXCEPT id FROM movies");
+    $queryAllMovies = $db->query("SELECT * FROM movies");
     try {
         $AllMovies = $queryAllMovies->fetchAll(PDO::FETCH_ASSOC);
         if ($AllMovies) {
