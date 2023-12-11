@@ -58,3 +58,8 @@ body {
   .navbar-toggler-icon {
     background-color: #fff;
   }
+
+    .modal-custom-width {
+        max-width: 100%;
+    }
+
