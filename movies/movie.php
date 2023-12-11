@@ -130,6 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
             $queryDeleteWishlist = $db->prepare("DELETE FROM wishlist WHERE movie_id IN (SELECT id FROM movies WHERE id = :id)");
             $queryDeleteWishlist->execute(['id' => $movieid]);
 
+            $queryDeleteWishlist = $db->prepare("DELETE FROM moviegenre WHERE movie_id IN (SELECT id FROM movies WHERE id = :id)");
+            $queryDeleteWishlist->execute(['id' => $movieid]);
+
             $queryDeleteMovies = $db->prepare("DELETE FROM movies WHERE id = :id");
             $queryDeleteMovies->execute(['id' => $movieid]);
 

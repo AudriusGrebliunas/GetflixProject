@@ -40,7 +40,7 @@ include 'navbar.php';
 </footer>
 
 <script>
-            
+
     let data;
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -53,6 +53,7 @@ include 'navbar.php';
                 var tbody = document.getElementById('dataTableBody');
                 data.forEach(function (row) {
                     var tr = document.createElement('tr');
+                    tr.id = 'row-' + row['id'];
                     tr.innerHTML = '<td>' + row['id'] + '</td>' +
                         '<td>' + row['name'] + '</td>' +
                         '<td>' + row['author'] + '</td>' +
@@ -66,8 +67,8 @@ include 'navbar.php';
                 });
             })
             .catch(function (error) {
-            console.log(error.response.status);
-            console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.data);
             });
 
     });
@@ -78,6 +79,20 @@ include 'navbar.php';
 
     function deleteRow(id) {
         console.log('Deleting row with ID ' + id);
+        axios.delete('http://localhost/movies/movie.php', {
+            params: {
+                id: id
+            }
+        })
+            .then(response => {
+                console.log(`Deleted post with ID ${id}`);
+                console.log(response.data);
+                document.getElementById('row-' + id).remove();
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     function search() {
