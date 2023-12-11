@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         $queryPassword = $db->prepare("UPDATE users SET password = :password WHERE email = :email");
         try {
             $queryPassword->execute(["email" => $email, "password" => $password]);
-            echo createResponse("200", "Successfully modified user data");
+            echo createResponse("200", "Successfully modified password");
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
             echo createResponse("503", "Internal Server Error");
