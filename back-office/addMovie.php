@@ -102,12 +102,12 @@ include 'navbar.php';
 
         moviesData.forEach(function (movie) {
             const movieCard = document.createElement('div');
-            movieCard.classList.add('col-md-3', 'm-2');
+            movieCard.classList.add('col-md-3', 'd-flex', 'align-items-center', 'justify-content-center');
 
             const imageElement = document.createElement('img');
             imageElement.src = movie.image;
             imageElement.alt = movie.name;
-            imageElement.classList.add('img-thumbnail', 'cursor-pointer');
+            imageElement.classList.add('cursor-pointer', 'img-fluid','rounded', 'mx-auto', 'd-block', 'p-3');
             imageElement.addEventListener('click', function () {
                 displayMovieModal(movie);
             });
@@ -185,6 +185,4 @@ include 'navbar.php';
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
-
-
 </html>
