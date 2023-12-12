@@ -103,7 +103,7 @@ include 'navbar.php';
     let data;
     document.addEventListener("DOMContentLoaded", function() {
 
-        axios.get('http://localhost:8080/movies/getAllMovies.php', {})
+        axios.get('http://localhost/movies/getAllMovies.php', {})
             .then(function(response) {
                 console.log(response.data.data);
                 data = response.data.data;
@@ -138,7 +138,7 @@ include 'navbar.php';
 
     function deleteRow(id) {
         console.log('Deleting row with ID ' + id);
-        axios.delete('http://localhost:8080/movies/movie.php', {
+        axios.delete('http://localhost/movies/movie.php', {
                 params: {
                     id: id
                 }
@@ -184,7 +184,7 @@ include 'navbar.php';
             var link_yt = document.getElementById("link_yt").value;
             var image = document.getElementById("image").value;
 
-            axios.put('http://localhost:8080/movies/movie.php', {
+            axios.put('http://localhost/movies/movie.php', {
                 id: id,
                 name: name,
                 author: author,

@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             resume = IF(:resume = '', resume, :resume),
             year = IF(:year = '', year, :year),
             link_yt = IF(:link_yt = '', link_yt, :link_yt),
-            image = IF(:image = '', image, :image),
+            image = IF(:image = '', image, :image)
         WHERE id = :id");
         try {
             $queryModify->execute([
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());
 
-            echo createResponse("501", "FAILURE: Internal Server Error", []);
+            echo createResponse("501", "FAILURE: Internal Server Error", $data);
             exit;
         }
     }
