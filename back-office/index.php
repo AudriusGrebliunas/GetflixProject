@@ -44,7 +44,7 @@ include 'navbar.php';
     let data;
     document.addEventListener("DOMContentLoaded", function () {
 
-        axios.get('http://localhost:8080/movies/getAllMovies.php', {
+        axios.get('http://localhost/movies/getAllMovies.php', {
         })
             .then(function (response) {
                 console.log(response.data.data);
@@ -61,7 +61,7 @@ include 'navbar.php';
                         '<td>' + row['resume'] + '</td>' +
                         '<td>' + row['year'] + '</td>' +
                         '<td><a href="' + row['link_yt'] + '" target="_blank">' + row['link_yt'] + '</a></td>' +
-                        '<td><img src="' + row['image'] + '"/></td>' +
+                        '<td><a href="' + row['image'] + '" target="_blank">' + row['image'] + '</a></td>' +
                         '<td class="action-buttons" style="width: 200px"><button class="btn btn-primary btn-sm" onclick="editRow(' + row['id'] + ')"><i class="fas fa-edit"></i> Edit</button>' +
                         '<button class="btn btn-danger btn-sm" onclick="deleteRow(' + row['id'] + ')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
                     tbody.appendChild(tr);
