@@ -83,10 +83,12 @@ include 'navbar.php';
 
 
 
-<footer class="fixed-bottom text-center py-2" style="background-color: #007bff; color: #fff;">
-    <p>&copy; 2023 Salty. All rights reserved.</p>
+<footer class="bg-body-secondary text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-body" href="https://github.com/AudriusGrebliunas/GetflixProject">Salty Project</a>
+  </div>
 </footer>
-
 <script>
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
@@ -210,7 +212,7 @@ include 'navbar.php';
 
         var filteredMovies = data.filter(function (movie) {
             return (
-                movie.name.toLowerCase().includes(searchValue)
+                movie.name.toLowerCase().includes(searchValue) || movie.year.toLowerCase().includes(searchValue)
             );
         });
 
