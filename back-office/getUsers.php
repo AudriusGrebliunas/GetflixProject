@@ -71,15 +71,23 @@ include 'navbar.php';
             <button type="submit">Submit data</button>
         </form>
     </div> -->
-    <div class="modal-content" style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="modal-content"
+        style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <span class="close" style="float: right; font-size: 28px; font-weight: bold;">&times;</span>
         <form onsubmit="submitForm(event)" style="display: grid; gap: 10px;">
-            <input type="email" required id="email" disabled style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="first_name" placeholder="First Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="last_name" placeholder="Last Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="address" placeholder="Address" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="date" required id="date-of-birth" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <button type="submit" style="padding: 10px; border-radius: 5px; border: none; background-color: #3498db; color: white; cursor: pointer;">Submit data</button>
+            <input type="email" required id="email" disabled
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="first_name" placeholder="First Name"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="last_name" placeholder="Last Name"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="address" placeholder="Address"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="date" required id="date-of-birth"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button type="submit"
+                style="padding: 10px; border-radius: 5px; border: none; background-color: #3498db; color: white; cursor: pointer;">Submit
+                data</button>
         </form>
     </div>
 
@@ -92,101 +100,103 @@ include 'navbar.php';
 <script>
     let users;
 
-            axios.get('http://localhost/user/userProfiles.php', {
+    function getAllUsers() {
+
+        axios.get('http://localhost:8080/user/userProfiles.php', {})
+            .then(function (response) {
+                console.log(response.status);
+                console.log(response.message);
+                console.log(response.data);
+                users = response.data.data;
+                populateUsers();
             })
-                .then(function (response) {
-                    //console.log(response.status);
-                    //console.log(response.message);
-                    console.log(response.data.data);
-                    users = response.data.data;
-                })
                 .catch(function (error) {
-                    //console.log(response.status);
-                    //console.log(response.message);
-                    console.log(response.data.data);
+                    console.log(response.status);
+                    console.log(response.message);
+                    console.log(response.data);
                 }
 
-            );
-    
-    getAllUsers();
+                );
 
-    function populateUsers() {
-        var tbody = document.getElementById('dataTableBody');
-        users.forEach(function(row) {
-            var tr = document.createElement('tr');
-            tr.innerHTML = '<td>' + row['email'] + '</td>' +
-                '<td>' + row['first_name'] + '</td>' +
-                '<td>' + row['last_name'] + '</td>' +
-                '<td>' + row['address'] + '</td>' +
-                '<td>' + row['dob'] + '</td>' +
+        getAllUsers();
 
-                '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
-                '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
-            tbody.appendChild(tr);
-        });
-    }
+        function populateUsers() {
+            var tbody = document.getElementById('dataTableBody');
+            users.forEach(function (row) {
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td>' + row['email'] + '</td>' +
+                    '<td>' + row['first_name'] + '</td>' +
+                    '<td>' + row['last_name'] + '</td>' +
+                    '<td>' + row['address'] + '</td>' +
+                    '<td>' + row['dob'] + '</td>' +
 
-    function deleteUser(email) {
-        axios.delete('http://localhost:8080/user/userProfile.php', {
+                    '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
+                    '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteUser(email) {
+            axios.delete('http://localhost/user/userProfile.php', {
                 params: {
                     email: email
                 }
             })
-            .then(function(response) {
-                console.log(response.status);
-                console.log(response.message);
-                console.log(response.data);
-                alert("Return successful!");
-                var tbody = document.getElementById('dataTableBody');
-                tbody.innerHTML = '';
-                location.reload()
-            })
-            .catch(function(error) {
-                console.error("Return failed:", error);
-            });
-    }
+                .then(function (response) {
+                    console.log(response.status);
+                    console.log(response.message);
+                    console.log(response.data);
+                    alert("Return successful!");
+                    var tbody = document.getElementById('dataTableBody');
+                    tbody.innerHTML = '';
+                    location.reload()
+                })
+                .catch(function (error) {
+                    console.error("Return failed:", error);
+                });
+        }
 
-    var modal = document.getElementById("myModal");
+        var modal = document.getElementById("myModal");
 
-    var btn = document.getElementById("myBtn");
+        var btn = document.getElementById("myBtn");
 
-    var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function () {
 
 
-    }
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        }
+        span.onclick = function () {
             modal.style.display = "none";
         }
-    }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
-    let userObject;
+        let userObject;
 
-    function populateModal(email) {
-        modal.style.display = "block";
-        //     let email = "audrius.grebliunas@gmail.com"
-        userObject = users.find(item => item.email === email);
-        document.getElementById("first_name").value = userObject["first_name"]
-        document.getElementById("last_name").value = userObject["last_name"]
-        document.getElementById("address").value = userObject["address"]
-        document.getElementById("date-of-birth").value = userObject["dob"]
-        document.getElementById("email").value = userObject["email"]
-    }
+        function populateModal(email) {
+            modal.style.display = "block";
+            //     let email = "audrius.grebliunas@gmail.com"
+            userObject = users.find(item => item.email === email);
+            document.getElementById("first_name").value = userObject["first_name"]
+            document.getElementById("last_name").value = userObject["last_name"]
+            document.getElementById("address").value = userObject["address"]
+            document.getElementById("date-of-birth").value = userObject["dob"]
+            document.getElementById("email").value = userObject["email"]
+        }
 
-    function submitForm(event) {
-        event.preventDefault();
-        var email = document.getElementById("email").value;
-        var first_name = document.getElementById("first_name").value;
-        var last_name = document.getElementById("last_name").value;
-        var address = document.getElementById("address").value;
-        var dob = document.getElementById("date-of-birth").value;
+        function submitForm(event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var first_name = document.getElementById("first_name").value;
+            var last_name = document.getElementById("last_name").value;
+            var address = document.getElementById("address").value;
+            var dob = document.getElementById("date-of-birth").value;
 
-        if (first_name && last_name && address && dob && email) {
-            axios.put('http://localhost:8080/user/userProfile.php', {
+            if (first_name && last_name && address && dob && email) {
+                axios.put('http://localhost:8080/user/userProfile.php', {
                     // data:
                     // {
                     email: email,
@@ -196,19 +206,19 @@ include 'navbar.php';
                     dob: dob
                     // }
                 })
-                .then(function(response) {
-                    console.log(response.data);
-                    location.reload()
+                    .then(function (response) {
+                        console.log(response.data);
+                        location.reload()
 
-                })
-                .catch(function(error) {
-                    console.error("Return not succesful:", error);
-                });
+                    })
+                    .catch(function (error) {
+                        console.error("Return not succesful:", error);
+                    });
+            }
+
+
+
         }
-
-
-
-    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
