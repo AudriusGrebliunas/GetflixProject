@@ -19,8 +19,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addModal"><i
-                            class="fas fa-plus"></i> Add New</button>
+                    <a class="nav-link" href="addMovie.php">Add Movie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="getUsers.php">Users</a>
                 </li>
             </ul>
         </div>

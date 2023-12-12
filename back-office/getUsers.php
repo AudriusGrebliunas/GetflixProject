@@ -7,10 +7,7 @@ include 'navbar.php';
 
 <div class="container mt-3">
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search...">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Search</button>
-        </div>
+        <input type="text" class="form-control" id="searchInput" placeholder="Search...">
     </div>
 </div>
 
@@ -110,116 +107,150 @@ include 'navbar.php';
                 users = response.data.data;
                 populateUsers();
             })
-                .catch(function (error) {
-                    console.log(response.status);
-                    console.log(response.message);
-                    console.log(response.data);
-                }
-
-                );
+            .catch(function (error) {
+                console.log(response.status);
+                console.log(response.message);
+                console.log(response.data);
             }
 
-        getAllUsers();
+            );
+    }
 
-        function populateUsers() {
-            var tbody = document.getElementById('dataTableBody');
-            users.forEach(function (row) {
-                var tr = document.createElement('tr');
-                tr.innerHTML = '<td>' + row['email'] + '</td>' +
-                    '<td>' + row['first_name'] + '</td>' +
-                    '<td>' + row['last_name'] + '</td>' +
-                    '<td>' + row['address'] + '</td>' +
-                    '<td>' + row['dob'] + '</td>' +
+    getAllUsers();
 
-                    '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
-                    '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
-                tbody.appendChild(tr);
+    function populateUsers() {
+        var tbody = document.getElementById('dataTableBody');
+        users.forEach(function (row) {
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + row['email'] + '</td>' +
+                '<td>' + row['first_name'] + '</td>' +
+                '<td>' + row['last_name'] + '</td>' +
+                '<td>' + row['address'] + '</td>' +
+                '<td>' + row['dob'] + '</td>' +
+
+                '<td class="action-buttons"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    function deleteUser(email) {
+        axios.delete('http://localhost/user/userProfile.php', {
+            params: {
+                email: email
+            }
+        })
+            .then(function (response) {
+                console.log(response.status);
+                console.log(response.message);
+                console.log(response.data);
+                alert("Return successful!");
+                var tbody = document.getElementById('dataTableBody');
+                tbody.innerHTML = '';
+                location.reload()
+            })
+            .catch(function (error) {
+                console.error("Return failed:", error);
             });
-        }
+    }
 
-        function deleteUser(email) {
-            axios.delete('http://localhost/user/userProfile.php', {
-                params: {
-                    email: email
-                }
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function () {
+
+
+    }
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let userObject;
+
+    function populateModal(email) {
+        modal.style.display = "block";
+        //     let email = "audrius.grebliunas@gmail.com"
+        userObject = users.find(item => item.email === email);
+        document.getElementById("first_name").value = userObject["first_name"]
+        document.getElementById("last_name").value = userObject["last_name"]
+        document.getElementById("address").value = userObject["address"]
+        document.getElementById("date-of-birth").value = userObject["dob"]
+        document.getElementById("email").value = userObject["email"]
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+        var email = document.getElementById("email").value;
+        var first_name = document.getElementById("first_name").value;
+        var last_name = document.getElementById("last_name").value;
+        var address = document.getElementById("address").value;
+        var dob = document.getElementById("date-of-birth").value;
+
+        if (first_name && last_name && address && dob && email) {
+            axios.put('http://localhost:8080/user/userProfile.php', {
+                // data:
+                // {
+                email: email,
+                first_name: first_name,
+                last_name: last_name,
+                address: address,
+                dob: dob
+                // }
             })
                 .then(function (response) {
-                    console.log(response.status);
-                    console.log(response.message);
                     console.log(response.data);
-                    alert("Return successful!");
-                    var tbody = document.getElementById('dataTableBody');
-                    tbody.innerHTML = '';
                     location.reload()
+
                 })
                 .catch(function (error) {
-                    console.error("Return failed:", error);
+                    console.error("Return not succesful:", error);
                 });
         }
 
-        var modal = document.getElementById("myModal");
-
-        var btn = document.getElementById("myBtn");
-
-        var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
 
 
-        }
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+    }
 
-        let userObject;
+    function search() {
+        var searchValue = document.getElementById('searchInput').value.toLowerCase();
 
-        function populateModal(email) {
-            modal.style.display = "block";
-            //     let email = "audrius.grebliunas@gmail.com"
-            userObject = users.find(item => item.email === email);
-            document.getElementById("first_name").value = userObject["first_name"]
-            document.getElementById("last_name").value = userObject["last_name"]
-            document.getElementById("address").value = userObject["address"]
-            document.getElementById("date-of-birth").value = userObject["dob"]
-            document.getElementById("email").value = userObject["email"]
-        }
+        var filteredUsers = users.filter(function (user) {
+            return (
+                user.first_name.toLowerCase().includes(searchValue) ||
+                user.last_name.toLowerCase().includes(searchValue)
+            );
+        });
 
-        function submitForm(event) {
-            event.preventDefault();
-            var email = document.getElementById("email").value;
-            var first_name = document.getElementById("first_name").value;
-            var last_name = document.getElementById("last_name").value;
-            var address = document.getElementById("address").value;
-            var dob = document.getElementById("date-of-birth").value;
+        // Clear the table body
+        var tbody = document.getElementById('dataTableBody');
+        tbody.innerHTML = '';
 
-            if (first_name && last_name && address && dob && email) {
-                axios.put('http://localhost:8080/user/userProfile.php', {
-                    // data:
-                    // {
-                    email: email,
-                    first_name: first_name,
-                    last_name: last_name,
-                    address: address,
-                    dob: dob
-                    // }
-                })
-                    .then(function (response) {
-                        console.log(response.data);
-                        location.reload()
+        // Populate the table with the filtered users
+        filteredUsers.forEach(function (row) {
+            var tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + row['email'] + '</td>' +
+                '<td>' + row['first_name'] + '</td>' +
+                '<td>' + row['last_name'] + '</td>' +
+                '<td>' + row['address'] + '</td>' +
+                '<td>' + row['dob'] + '</td>' +
+                '<td class="action-buttons">' +
+                '<button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['email'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="deleteUser(\'' + row['email'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button>' +
+                '</td>';
+            tbody.appendChild(tr);
+        });
+    }
 
-                    })
-                    .catch(function (error) {
-                        console.error("Return not succesful:", error);
-                    });
-            }
+    document.getElementById('searchInput').addEventListener('input', search);
 
-
-
-        }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
