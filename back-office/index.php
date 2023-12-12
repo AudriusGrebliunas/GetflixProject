@@ -7,10 +7,7 @@ include 'navbar.php';
 
 <div class="container mt-3">
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search...">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Search</button>
-        </div>
+        <input type="text" class="form-control" id="searchInput" placeholder="Search...">
     </div>
 </div>
 
@@ -36,17 +33,23 @@ include 'navbar.php';
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */">
 
-    <div class="modal-content" style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="modal-content"
+        style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <span class="close" style="float: right; font-size: 28px; font-weight: bold;">&times;</span>
         <form onsubmit="submitForm(event)" style="display: grid; gap: 10px;">
-            <input type="text" required id="id" disabled style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="name" placeholder="First Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="author" placeholder="Last Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" required id="resume" placeholder="Address" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="id" disabled
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="name" placeholder="First Name"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="author" placeholder="Last Name"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" required id="resume" placeholder="Address"
+                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
             <input type="text" required id="year" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
             <input type="text" required id="link_yt" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
             <input type="text" required id="image" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <button type="submit" style="padding: 10px; border-radius: 5px; border: none; background-color: #3498db; color: white; cursor: pointer;">Submit
+            <button type="submit"
+                style="padding: 10px; border-radius: 5px; border: none; background-color: #3498db; color: white; cursor: pointer;">Submit
                 data</button>
         </form>
     </div>
@@ -88,28 +91,28 @@ include 'navbar.php';
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
+    btn.onclick = function () {
         modal.style.display = "block";
     }
-    span.onclick = function() {
+    span.onclick = function () {
         modal.style.display = "none";
     }
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
 
     let data;
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
 
         axios.get('http://localhost/movies/getAllMovies.php', {})
-            .then(function(response) {
+            .then(function (response) {
                 console.log(response.data.data);
                 data = response.data.data;
 
                 var tbody = document.getElementById('dataTableBody');
-                data.forEach(function(row) {
+                data.forEach(function (row) {
                     console.log("test")
                     var tr = document.createElement('tr');
                     tr.id = 'row-' + row['id'];
@@ -125,7 +128,7 @@ include 'navbar.php';
                     tbody.appendChild(tr);
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error.response.status);
                 console.log(error.response.data);
             });
@@ -139,10 +142,10 @@ include 'navbar.php';
     function deleteRow(id) {
         console.log('Deleting row with ID ' + id);
         axios.delete('http://localhost/movies/movie.php', {
-                params: {
-                    id: id
-                }
-            })
+            params: {
+                id: id
+            }
+        })
             .then(response => {
                 console.log(`Deleted post with ID ${id}`);
                 console.log(response.data);
@@ -154,9 +157,6 @@ include 'navbar.php';
             });
     }
 
-    function search() {
-        console.log('Searching...');
-    }
     let movieObject;
 
     function populateModal(id) {
@@ -175,34 +175,64 @@ include 'navbar.php';
     }
 
     function submitForm(event) {
-            event.preventDefault();
-            var id = document.getElementById("id").value;
-            var name = document.getElementById("name").value;
-            var author = document.getElementById("author").value;
-            var resume = document.getElementById("resume").value
-            var year = document.getElementById("year").value;
-            var link_yt = document.getElementById("link_yt").value;
-            var image = document.getElementById("image").value;
+        event.preventDefault();
+        var id = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        var author = document.getElementById("author").value;
+        var resume = document.getElementById("resume").value
+        var year = document.getElementById("year").value;
+        var link_yt = document.getElementById("link_yt").value;
+        var image = document.getElementById("image").value;
 
-            axios.put('http://localhost/movies/movie.php', {
-                id: id,
-                name: name,
-                author: author,
-                resume : resume,
-                year : year,
-                link_yt: link_yt,
-                image: image,
+        axios.put('http://localhost/movies/movie.php', {
+            id: id,
+            name: name,
+            author: author,
+            resume: resume,
+            year: year,
+            link_yt: link_yt,
+            image: image,
+        })
+            .then(function (response) {
+                console.log(response.data);
+                alert("Update successful!");
             })
-                .then(function (response) {
-                    console.log(response.data);
-                    alert("Update successful!");
-                })
-                .catch(function (error) {
-                    console.error("Register failed:", error);
-                }
-                );
-        }
+            .catch(function (error) {
+                console.error("Register failed:", error);
+            }
+            );
+    }
 
+    
+
+    function search() {
+        var searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+        var filteredMovies = data.filter(function (movie) {
+            return (
+                movie.name.toLowerCase().includes(searchValue)
+            );
+        });
+
+        var tbody = document.getElementById('dataTableBody');
+        tbody.innerHTML = '';
+
+        filteredMovies.forEach(function (row) {
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + row['id'] + '</td>' +
+                '<td>' + row['name'] + '</td>' +
+                '<td>' + row['author'] + '</td>' +
+                '<td>' + row['resume'] + '</td>' +
+                '<td>' + row['year'] + '</td>' +
+                '<td><a href="' + row['link_yt'] + '" target="_blank">' + row['link_yt'] + '</a></td>' +
+                '<td><a href="' + row['image'] + '" target="_blank">' + row['image'] + '</a></td>' +
+                '<td class="action-buttons" style="width: 200px"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['id'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="deleteMovie(\'' + row['id'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', search);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
