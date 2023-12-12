@@ -46,6 +46,9 @@ include 'navbar.php';
                         <div class="mb-3">
                             <strong>Resume:</strong> <span id="movieResume"></span>
                         </div>
+                        <div>
+                            <button class="btn btn-success" type="submit" onclick="AddDb()">Add movie</button>
+                        </div>
                     </div>
                     <div class="col-md-6 text-center">
                         <img id="modalImage" class="img-fluid rounded p-3" style="max-height: 80vh; max-width: 100%;" alt="Movie Image">
