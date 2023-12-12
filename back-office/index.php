@@ -173,6 +173,36 @@ include 'navbar.php';
         document.getElementById("link_yt").value = movieObject["link_yt"]
         document.getElementById("year").value = movieObject["year"]
     }
+
+    function submitForm(event) {
+            event.preventDefault();
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var author = document.getElementById("author").value;
+            var resume = document.getElementById("resume").value
+            var year = document.getElementById("year").value;
+            var link_yt = document.getElementById("link_yt").value;
+            var image = document.getElementById("image").value;
+
+            axios.put('http://localhost:8080/movies/movie.php', {
+                id: id,
+                name: name,
+                author: author,
+                resume : resume,
+                year : year,
+                link_yt: link_yt,
+                image: image,
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    alert("Update successful!");
+                })
+                .catch(function (error) {
+                    console.error("Register failed:", error);
+                }
+                );
+        }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

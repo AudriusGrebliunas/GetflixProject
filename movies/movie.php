@@ -60,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         $year = isset($data['year']) ? $data['year'] : '';
         $link_yt = isset($data['link_yt']) ? $data['link_yt'] : '';
         $image = isset($data['image']) ? $data['image'] : '';
-        $genre = isset($data['genre']) ? $data['genre'] : '';
     }
 
 
@@ -81,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             year = IF(:year = '', year, :year),
             link_yt = IF(:link_yt = '', link_yt, :link_yt),
             image = IF(:image = '', image, :image),
-            genre = IF(:genre = '', genre, :genre)
         WHERE id = :id");
         try {
             $queryModify->execute([
@@ -91,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
                 "year" => $year,
                 "link_yt" => $link_yt,
                 "image" => $image,
-                "genre" => $genre,
                 "id" => $id
             ]);
             echo createResponse("201", "SUCCESS: Movie successfully updated", $id);
