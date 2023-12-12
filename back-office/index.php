@@ -44,7 +44,7 @@ include 'navbar.php';
     let data;
     document.addEventListener("DOMContentLoaded", function () {
 
-        axios.get('http://localhost/movies/getAllMovies.php', {
+        axios.get('http://localhost:8080/movies/getAllMovies.php', {
         })
             .then(function (response) {
                 console.log(response.data.data);
@@ -52,6 +52,7 @@ include 'navbar.php';
 
                 var tbody = document.getElementById('dataTableBody');
                 data.forEach(function (row) {
+                    console.log("test")
                     var tr = document.createElement('tr');
                     tr.id = 'row-' + row['id'];
                     tr.innerHTML = '<td>' + row['id'] + '</td>' +

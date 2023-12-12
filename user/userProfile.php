@@ -52,11 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         $last_name = isset($data['last_name']) ? $data['last_name'] : '';
         $address = isset($data['address']) ? $data['address'] : '';
         $dob = isset($data['dob']) ? $data['dob'] : '';
-        $password = isset($data['password']) ? $data['password'] : '';
         $email = isset($data['email']) ? $data['email'] : '';
     }
 
-    if (empty($data["email"]) || empty($data["password"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
+    if (empty($data["email"]) || empty($data["first_name"]) || empty($data["last_name"]) || empty($data["address"]) || empty($data["dob"])) {
         echo createResponse('Error 403', 'Data missing', $data);
         exit;
     }
@@ -71,9 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         echo createResponse("Error 421", "Profile doesn't exist", $email);
         exit;
     } else {
-        $queryRegister = $db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob, password = :password WHERE email = :email");
+        $queryRegister = $db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, address = :address, dob = :dob WHERE email = :email");
         try {
-            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email, "password" => $password]);
+            $queryRegister->execute(["first_name" => $first_name, "last_name" => $last_name, "address" => $address, "dob" => $dob, "email" => $email]);
             echo createResponse("200", "Successfully modified user data");
         } catch (PDOException $e) {
             error_log("Database Error: " . $e->getMessage());

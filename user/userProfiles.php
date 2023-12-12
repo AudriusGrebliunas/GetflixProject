@@ -15,7 +15,7 @@ function createResponse($status, $message, $data = [])
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $queryUserData = $db->query("SELECT first_name, last_name, address, email, dob, question FROM users");
+    $queryUserData = $db->query("SELECT first_name, last_name, address, email, dob, question FROM users WHERE deleted = 0 ");
     try {
         $UserData=$queryUserData->fetchAll(PDO::FETCH_ASSOC);
         if ($UserData) {
