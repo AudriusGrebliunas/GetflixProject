@@ -363,7 +363,7 @@ paths:
       description: This can only be done by the admin.
       operationId: updateMovie
       parameters:
-        - name: movieName
+        - name: movieId
           in: query
           description: Name that needs to be updated
           required: true
@@ -399,7 +399,7 @@ paths:
       description: This can only be done by the Admin.
       operationId: deleteMovie
       parameters:
-        - name: movieName
+        - name: movieId
           in: query
           description: The movie that needs to be deleted
           required: true
@@ -515,7 +515,7 @@ paths:
     delete:
       tags:
         - wishlist
-      summary: Update wishlist
+      summary: Delete from wishlist
       description: This can only be done by the logged-in user.
       operationId: deleteFromWishlist
       parameters:
@@ -714,9 +714,9 @@ paths:
       tags:
         - ratings
   /rating/deleteMovieRating.php:
-    summary: Update a movie rating for a user 
+    summary: Delete a movie rating for a user 
     delete:
-      summary: Update a movie rating for a user 
+      summary: Delete a movie rating for a user 
       description: ''
       operationId: deleteMovieRating
       parameters:

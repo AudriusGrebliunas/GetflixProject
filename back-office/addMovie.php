@@ -46,6 +46,9 @@ include 'navbar.php';
                         <div class="mb-3">
                             <strong>Resume:</strong> <span id="movieResume"></span>
                         </div>
+                        <div class="mb-3">
+                            <strong>Genre:</strong> <span id="movieGenre"></span>
+                        </div>
                         <div>
                             <button class="btn btn-success" type="submit" onclick="addDb()">Add movie</button>
                         </div>
@@ -121,12 +124,14 @@ include 'navbar.php';
     const movieLinkYT = document.getElementById('movieLinkYT');
     const movieResume = document.getElementById('movieResume');
     const modalImage = document.getElementById('modalImage');
+    const movieGenre = document.getElementById('modalGenre');
 
     movieName.innerText = selectedMovie.name;
     movieAuthor.innerText = selectedMovie.author;
     movieYear.innerText = selectedMovie.year;
     movieLinkYT.innerHTML = `<a href="${selectedMovie.link_yt}" target="_blank">${selectedMovie.link_yt}</a>`;
     movieResume.innerText = selectedMovie.resume;
+    //movieGenre.innerText = (selectedMovie.genre && selectedMovie.genre.length > 0) ? selectedMovie.genre.join(', ') : "null";
 
     modalImage.src = selectedMovie.image;
     modalImage.alt = selectedMovie.name;
@@ -143,12 +148,14 @@ function closeMovieModal() {
 function addDb() {
     axios.post('http://localhost/movies/add.php', {
             params: {
-                name: selectedMovie.name,
-                author: selectedMovie.author, 
-                year: selectedMovie.year,
-                link_yt: selectedMovie.link_yt,
-                resume: selectedMovie.resume,
-                image: selectedMovie.image
+                name: document.querySelector('#movieName').innerText,
+                author: document.querySelector('#movieAuthor').innerText, 
+                year: document.querySelector('#movieYear').innerText,
+                link_yt: document.querySelector('#movieLinkYT').innerText,
+                resume: document.querySelector('#movieResume').innerText,
+                image: document.querySelector("#modalImage").src,
+                genre: document.getElementById('modalGenre').innerText
+ 
             }
         })
             .then(function (response) {
@@ -159,7 +166,6 @@ function addDb() {
                 console.log(error.response.data);
             });
     }
-}
 
 </script>
 
