@@ -91,8 +91,11 @@ include 'navbar.php';
 
 </div>
 
-<footer class="fixed-bottom text-center py-3" style="background-color: #007bff; color: #fff;">
-    <p>&copy; 2023 Your Company. All rights reserved.</p>
+<footer class="bg-body-secondary text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-body" href="https://github.com/AudriusGrebliunas/GetflixProject">Salty Project</a>
+  </div>
 </footer>
 <script>
     let users;
