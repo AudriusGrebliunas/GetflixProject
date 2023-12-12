@@ -92,20 +92,18 @@ include 'navbar.php';
 <script>
     let users;
 
-    function getAllUsers() {
-
-        axios.get('http://localhost:8080/user/userProfiles.php', {})
-            .then(function(response) {
-                console.log(response.status);
-                console.log(response.message);
-                console.log(response.data);
-                users = response.data.data;
-                populateUsers();
+            axios.get('http://localhost/user/userProfiles.php', {
             })
-            .catch(function(error) {
-                    console.log(response.status);
-                    console.log(response.message);
-                    console.log(response.data);
+                .then(function (response) {
+                    //console.log(response.status);
+                    //console.log(response.message);
+                    console.log(response.data.data);
+                    users = response.data.data;
+                })
+                .catch(function (error) {
+                    //console.log(response.status);
+                    //console.log(response.message);
+                    console.log(response.data.data);
                 }
 
             );
