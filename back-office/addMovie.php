@@ -79,7 +79,7 @@ include 'navbar.php';
         var searchValue = document.getElementById('searchInput').value;
         console.log('Search value:', searchValue);
 
-        axios.get('http://localhost:8080/movies/getBO.php', {
+        axios.get('http://localhost/movies/getBO.php', {
             params: {
                 q: searchValue
             }
@@ -150,11 +150,11 @@ include 'navbar.php';
         const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
         movieModal.hide();
     }
-
+    let arrayGenre;
     function addDb() {
         let uniqueGenre = document.getElementById('movieGenre').innerText
         if (uniqueGenre) {
-            const arrayGenre = uniqueGenre.split(',').map(genre => genre.trim());
+            arrayGenre = uniqueGenre.split(',').map(genre => genre.trim());
         } else {
             arrayGenre = [];
         }
