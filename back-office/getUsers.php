@@ -32,7 +32,7 @@ include 'navbar.php';
         </tbody>
     </table>
 </div>
-<button id="myBtn">Open Modal</button>
+<button id="myBtn" style="display: none;">Open Modal</button>
 <div id="myModal" class="modal" style="  display: none;
   /* Hidden by default */
   position: fixed;
@@ -72,7 +72,7 @@ include 'navbar.php';
         </form>
     </div> -->
     <div class="modal-content" style="font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <span class="close" style="color: #aaaaaa; float: right; font-size: 28px; font-weight: bold;">&times;</span>
+        <span class="close" style="float: right; font-size: 28px; font-weight: bold;">&times;</span>
         <form onsubmit="submitForm(event)" style="display: grid; gap: 10px;">
             <input type="email" required id="email" disabled style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
             <input type="text" required id="first_name" placeholder="First Name" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
