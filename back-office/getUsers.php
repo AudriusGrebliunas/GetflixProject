@@ -102,7 +102,7 @@ include 'navbar.php';
 
     function getAllUsers() {
 
-        axios.get('http://localhost:8080/user/userProfiles.php', {})
+        axios.get('http://localhost/user/userProfiles.php', {})
             .then(function (response) {
                 console.log(response.status);
                 console.log(response.message);
@@ -117,6 +117,7 @@ include 'navbar.php';
                 }
 
                 );
+            }
 
         getAllUsers();
 
