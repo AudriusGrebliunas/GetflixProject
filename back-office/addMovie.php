@@ -47,7 +47,7 @@ include 'navbar.php';
                             <strong>Resume:</strong> <span id="movieResume"></span>
                         </div>
                         <div>
-                            <button class="btn btn-success" type="submit" onclick="AddDb()">Add movie</button>
+                            <button class="btn btn-success" type="submit" onclick="addDb()">Add movie</button>
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
@@ -122,24 +122,43 @@ include 'navbar.php';
     const movieResume = document.getElementById('movieResume');
     const modalImage = document.getElementById('modalImage');
 
-    // Set Movie Info
     movieName.innerText = selectedMovie.name;
     movieAuthor.innerText = selectedMovie.author;
     movieYear.innerText = selectedMovie.year;
     movieLinkYT.innerHTML = `<a href="${selectedMovie.link_yt}" target="_blank">${selectedMovie.link_yt}</a>`;
     movieResume.innerText = selectedMovie.resume;
 
-    // Set Movie Image
     modalImage.src = selectedMovie.image;
     modalImage.alt = selectedMovie.name;
 
-    // Show Modal
     const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
     movieModal.show();
 }
+
 function closeMovieModal() {
     const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
     movieModal.hide();
+}
+
+function addDb() {
+    axios.post('http://localhost/movies/add.php', {
+            params: {
+                name: selectedMovie.name,
+                author: selectedMovie.author, 
+                year: selectedMovie.year,
+                link_yt: selectedMovie.link_yt,
+                resume: selectedMovie.resume,
+                image: selectedMovie.image
+            }
+        })
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.log(error.response.status);
+                console.log(error.response.data);
+            });
+    }
 }
 
 </script>
