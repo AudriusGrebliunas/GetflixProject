@@ -18,9 +18,6 @@ include 'navbar.php';
     <div class="row">
         <div class="col-md-6">
             <h2>Add Movie</h2>
-
-            <div id="movieGallery" class="row">
-            </div>
         </div>
 
         <div class="col-md-6 ms-auto">
@@ -66,107 +63,163 @@ include 'navbar.php';
                                     <label for="image" class="form-label">Image Link:</label>
                                     <input type="text" class="form-control" id="image" required>
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Genre:</label>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_28" value="28"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_28">Action</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_28" value="28"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_28">Action</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_12" value="12"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_12">Adventure</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_16" value="16"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_16">Animation</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_12" value="12"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_12">Adventure</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_35" value="35"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_35">Comedy</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_80" value="80"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_80">Crime</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_99" value="99"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_99">Documentary</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_16" value="16"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_16">Animation</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_18" value="18"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_18">Drama</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_10751"
+                                                    value="10751" name="genre[]">
+                                                <label class="form-check-label" for="genre_10751">Family</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_14" value="14"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_14">Fantasy</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_35" value="35"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_35">Comedy</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_36" value="36"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_36">History</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_27" value="27"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_27">Horror</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_10402"
+                                                    value="10402" name="genre[]">
+                                                <label class="form-check-label" for="genre_10402">Music</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_80" value="80"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_80">Crime</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_9648"
+                                                    value="9648" name="genre[]">
+                                                <label class="form-check-label" for="genre_9648">Mystery</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_10749"
+                                                    value="10749" name="genre[]">
+                                                <label class="form-check-label" for="genre_10749">Romance</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_878"
+                                                    value="878" name="genre[]">
+                                                <label class="form-check-label" for="genre_878">Science Fiction</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_99" value="99"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_99">Documentary</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_10770"
+                                                    value="10770" name="genre[]">
+                                                <label class="form-check-label" for="genre_10770">TV Movie</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_53" value="53"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_53">Thriller</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_10752"
+                                                    value="10752" name="genre[]">
+                                                <label class="form-check-label" for="genre_10752">War</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_18" value="18"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_18">Drama</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_10751" value="10751"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_10751">Family</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_14" value="14"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_14">Fantasy</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_36" value="36"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_36">History</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_27" value="27"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_27">Horror</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_10402" value="10402"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_10402">Music</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_9648" value="9648"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_9648">Mystery</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_10749" value="10749"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_10749">Romance</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_878" value="878"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_878">Science Fiction</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_10770" value="10770"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_10770">TV Movie</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_53" value="53"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_53">Thriller</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_10752" value="10752"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_10752">War</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="genre_37" value="37"
-                                            name="genre[]">
-                                        <label class="form-check-label" for="genre_37">Western</label>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="genre_37" value="37"
+                                                    name="genre[]">
+                                                <label class="form-check-label" for="genre_37">Western</label>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-success">Add Movie</button>
                                 </div>
