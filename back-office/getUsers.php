@@ -107,7 +107,7 @@ include 'navbar.php';
                 }
 
             );
-    }
+    
     getAllUsers();
 
     function populateUsers() {
