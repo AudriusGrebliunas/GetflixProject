@@ -4,8 +4,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import Connexion from './Compenant/Connexion'
-import Register from './Compenant/Register'
+import Connexion from './connexion'
+import Register from './register'
+import Wishlist from './wishlist';
 
 export default function App() {
 
@@ -15,8 +16,13 @@ export default function App() {
       element: <Connexion />
     },
     {
-      path: "/register",
+      path: "register",
       element: <Register />
+    }
+    ,
+    {
+      path: "wishlist",
+      element: <Wishlist />
     }
   ]);
   

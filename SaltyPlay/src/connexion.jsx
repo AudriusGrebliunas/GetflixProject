@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './../App.css';
+import './App.css';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 
