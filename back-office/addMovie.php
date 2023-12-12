@@ -22,45 +22,46 @@ include 'navbar.php';
 
 
     <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="movieModalLabel">Movie Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <strong>Name:</strong> <span id="movieName" class="fw-bold"></span>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movieModalLabel">Movie Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <strong>Name:</strong> <span id="movieName" class="fw-bold"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Author:</strong> <span id="movieAuthor"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Year:</strong> <span id="movieYear"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Link YouTube:</strong> <span id="movieLinkYT"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Resume:</strong> <span id="movieResume"></span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Genre:</strong> <span id="movieGenre"></span>
+                            </div>
+                            <div>
+                                <button class="btn btn-success" type="submit" onclick="addDb()">Add movie</button>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <strong>Author:</strong> <span id="movieAuthor"></span>
+                        <div class="col-md-6 text-center">
+                            <img id="modalImage" class="img-fluid rounded p-3"
+                                style="max-height: 80vh; max-width: 100%;" alt="Movie Image">
                         </div>
-                        <div class="mb-3">
-                            <strong>Year:</strong> <span id="movieYear"></span>
-                        </div>
-                        <div class="mb-3">
-                            <strong>Link YouTube:</strong> <span id="movieLinkYT"></span>
-                        </div>
-                        <div class="mb-3">
-                            <strong>Resume:</strong> <span id="movieResume"></span>
-                        </div>
-                        <div class="mb-3">
-                            <strong>Genre:</strong> <span id="movieGenre"></span>
-                        </div>
-                        <div>
-                            <button class="btn btn-success" type="submit" onclick="addDb()">Add movie</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-center">
-                        <img id="modalImage" class="img-fluid rounded p-3" style="max-height: 80vh; max-width: 100%;" alt="Movie Image">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
@@ -117,46 +118,57 @@ include 'navbar.php';
     }
 
     function displayMovieModal(selectedMovie) {
-    const modalBody = document.getElementById('modalBody');
-    const movieName = document.getElementById('movieName');
-    const movieAuthor = document.getElementById('movieAuthor');
-    const movieYear = document.getElementById('movieYear');
-    const movieLinkYT = document.getElementById('movieLinkYT');
-    const movieResume = document.getElementById('movieResume');
-    const modalImage = document.getElementById('modalImage');
-    const movieGenre = document.getElementById('modalGenre');
+        const modalBody = document.getElementById('modalBody');
+        const movieName = document.getElementById('movieName');
+        const movieAuthor = document.getElementById('movieAuthor');
+        const movieYear = document.getElementById('movieYear');
+        const movieLinkYT = document.getElementById('movieLinkYT');
+        const movieResume = document.getElementById('movieResume');
+        const modalImage = document.getElementById('modalImage');
+        const movieGenre = document.getElementById('movieGenre');
 
-    movieName.innerText = selectedMovie.name;
-    movieAuthor.innerText = selectedMovie.author;
-    movieYear.innerText = selectedMovie.year;
-    movieLinkYT.innerHTML = `<a href="${selectedMovie.link_yt}" target="_blank">${selectedMovie.link_yt}</a>`;
-    movieResume.innerText = selectedMovie.resume;
-    //movieGenre.innerText = (selectedMovie.genre && selectedMovie.genre.length > 0) ? selectedMovie.genre.join(', ') : "null";
+        movieName.innerText = selectedMovie.name;
+        movieAuthor.innerText = selectedMovie.author;
+        movieYear.innerText = selectedMovie.year;
+        movieLinkYT.innerHTML = `<a href="${selectedMovie.link_yt}" target="_blank">${selectedMovie.link_yt}</a>`;
+        movieResume.innerText = selectedMovie.resume;
+        if (selectedMovie.genre && selectedMovie.genre.length > 0) {
+            movieGenre.innerText = selectedMovie.genre.join(', ')
+        }
+        else {
+            movieGenre.innerText = [];
+        }
 
-    modalImage.src = selectedMovie.image;
-    modalImage.alt = selectedMovie.name;
+        modalImage.src = selectedMovie.image;
+        modalImage.alt = selectedMovie.name;
 
-    const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
-    movieModal.show();
-}
+        const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
+        movieModal.show();
+    }
 
-function closeMovieModal() {
-    const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
-    movieModal.hide();
-}
+    function closeMovieModal() {
+        const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
+        movieModal.hide();
+    }
 
-function addDb() {
-    axios.post('http://localhost/movies/add.php', {
-            params: {
-                name: document.querySelector('#movieName').innerText,
-                author: document.querySelector('#movieAuthor').innerText, 
-                year: document.querySelector('#movieYear').innerText,
-                link_yt: document.querySelector('#movieLinkYT').innerText,
-                resume: document.querySelector('#movieResume').innerText,
-                image: document.querySelector("#modalImage").src,
-                genre: document.getElementById('modalGenre').innerText
- 
-            }
+    function addDb() {
+        let uniqueGenre = document.getElementById('movieGenre').innerText
+        if (uniqueGenre) {
+            const arrayGenre = uniqueGenre.split(',').map(genre => genre.trim());
+        } else {
+            arrayGenre = [];
+        }
+        axios.post('http://localhost/movies/add.php', {
+
+            name: document.querySelector('#movieName').innerText,
+            author: document.querySelector('#movieAuthor').innerText,
+            year: document.querySelector('#movieYear').innerText,
+            link_yt: document.querySelector('#movieLinkYT').innerText,
+            resume: document.querySelector('#movieResume').innerText,
+            image: document.querySelector("#modalImage").src,
+            genre: arrayGenre
+
+
         })
             .then(function (response) {
                 console.log(response.data);
