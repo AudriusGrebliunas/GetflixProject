@@ -75,7 +75,7 @@ include 'navbar.php';
         var searchValue = document.getElementById('searchInput').value;
         console.log('Search value:', searchValue);
 
-        axios.get('http://localhost/movies/getBO.php', {
+        axios.get('http://localhost:8080/movies/getBO.php', {
             params: {
                 q: searchValue
             }
