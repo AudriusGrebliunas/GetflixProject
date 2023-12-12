@@ -3,12 +3,21 @@ body {
   background-color: #f8f9fa;
 }
 
-.container {
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+  .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .container-fluid {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 70%;
+  }
 
 h2 {
   color: #007bff;
@@ -32,10 +41,11 @@ tbody tr:hover {
   background-color: #f8d7da;
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: space-around;
-}
+
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+  }
 
 .navbar {
   background-color: #007bff;
