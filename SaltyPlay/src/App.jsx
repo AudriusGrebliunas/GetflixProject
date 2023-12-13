@@ -7,13 +7,16 @@ import "./index.css";
 import Connexion from './connexion'
 import Register from './register'
 import Wishlist from './wishlist';
+import ConnexionPage from './connexion';
+import CategoryPage from './categorie';
+import View from './view';
 
 export default function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Connexion />
+      element: <ConnexionPage />
     },
     {
       path: "register",
@@ -23,6 +26,16 @@ export default function App() {
     {
       path: "wishlist",
       element: <Wishlist />
+    }
+    ,
+    {
+      path: "categorie",
+      element: <CategoryPage />
+    }
+    ,
+    {
+      path: "view",
+      element: <View />
     }
   ]);
   

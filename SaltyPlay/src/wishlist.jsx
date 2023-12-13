@@ -53,8 +53,8 @@ function Wishlist() {
   return (
     
     <div>
+    <Navbar />
       <div className=" bg-cover bg-center h-screen" style={{ backgroundImage: selectedMovie ? `url('https://image.tmdb.org/t/p/original${selectedMovie.backdrop_path}')` : "url('https://placehold.co/1920x1080')"}}>
-      <Navbar />
         <div className="bg-gray-800 bg-opacity-0 h-screen flex flex-col items-center item-left">
           {selectedMovie ? (
             <div className="bg-white opacity-20 p-4 rounded-lg shadow-md mb-4 max-w h-auto item-left">

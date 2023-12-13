@@ -3,7 +3,7 @@ import './App.css';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 
-const RegisterPage = () => {
+const ConnexionPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -68,4 +68,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ConnexionPage;
