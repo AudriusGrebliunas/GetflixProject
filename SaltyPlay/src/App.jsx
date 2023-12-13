@@ -10,6 +10,8 @@ import Wishlist from './wishlist';
 import ConnexionPage from './connexion';
 import CategoryPage from './categorie';
 import View from './view';
+import ForgetPassword from './Forgot-password';
+import SecretQuestion from './SecretQuestion';
 
 export default function App() {
 
@@ -36,6 +38,16 @@ export default function App() {
     {
       path: "view",
       element: <View />
+    }
+    ,
+    {
+      path: "ForgotPassword",
+      element: <ForgetPassword />
+    }
+    ,
+    {
+      path: "SecretQuestion",
+      element: <SecretQuestion />
     }
   ]);
   
