@@ -1,25 +1,19 @@
-// // api.js
-// import axios from 'axios';
+// api.js
+import axios from 'axios';
 
-// const apiKey = 'e6469fd4a12ae30bb7b2178e0abf7173';
+const apiDB = axios.create({
+  baseURL: 'https://saltybecode2.000webhostapp.com/',
+});
 
-// const tmdbApi = axios.create({
-//   baseURL: 'https://api.themoviedb.org/3/',
-// });
-
-// export const getMovieInfo = async (movieId) => {
-//   try {
-//     const response = await tmdbApi.get(`movie/${movieId}`, {
-//       params: {
-//         api_key: apiKey,
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('Erreur lors de la récupération des informations sur le film:', error);
-//     return null;
-//   }
-// };
+export const getMovieInfo = async (movieId) => {
+  try {
+    const response = await apiDB.get(`movie/${movieId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des informations sur le film:', error);
+    return null;
+  }
+};
 
 // export const getMovieVideos = async (movieId) => {
 //   try {
@@ -52,7 +46,7 @@
 //     console.error('Erreur lors de la récupération des films aléatoires:', error);
 //     return null;
 //   }
-// };
+// // };
 
 // const shuffleArray = (array) => {
 //   for (let i = array.length - 1; i > 0; i--) {
