@@ -1,16 +1,16 @@
 
 import React, { useState } from 'react';
-import Navbar from './Compenant/navbar'; // Import your Navbar component
+import Navbar from './Compenant/navbar'; 
 
 export default function View() {
   const [selectedCell, setSelectedCell] = useState(null);
 
   const handleCellClick = (index) => {
-    // If the clicked cell is already selected, deselect it
+   
     if (index === selectedCell) {
       setSelectedCell(null);
     } else {
-      // Otherwise, select the clicked cell
+    
       setSelectedCell(index);
     }
   };
@@ -29,7 +29,6 @@ export default function View() {
             } ${index === selectedCell ? 'border-4 border-blue-500' : ''}`}
             onClick={() => handleCellClick(index)}
           >
-            {/* Add content to display within the clicked cell */}
             {index === selectedCell && <div className="text-white">Content to Display</div>}
           </div>
         ))}
