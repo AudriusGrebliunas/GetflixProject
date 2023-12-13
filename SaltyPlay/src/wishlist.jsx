@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMovieInfo, getRandomMovies } from './Compenant/api';
+import { getMoviesInfo} from './Compenant/api';
 import Navbar from './Compenant/navbar';  
 
 function Wishlist() {

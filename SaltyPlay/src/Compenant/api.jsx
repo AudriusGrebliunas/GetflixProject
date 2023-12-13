@@ -61,3 +61,18 @@
 //   }
 //   return array;
 // };
+import axios from 'axios';
+
+const apiDB = axios.create({
+  baseURL: 'https://saltybecode2.000webhostapp.com/',
+});
+
+export const getMoviesInfo = async () => {
+  try {
+    const response = await apiDB.get(`movies/getAllMovies.php`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des informations sur le film:', error);
+    return null;
+  }
+};

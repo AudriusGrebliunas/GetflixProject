@@ -5,16 +5,15 @@ const apiDB = axios.create({
   baseURL: 'https://saltybecode2.000webhostapp.com/',
 });
 
-export const getMovieInfo = async (movieId) => {
+export const getMoviesInfo = async (movieId) => {
   try {
-    const response = await apiDB.get(`movie/${movieId}`);
+    const response = await apiDB.get(`movies/getAllMovies.php`);
     return response.data.data;
   } catch (error) {
     console.error('Erreur lors de la récupération des informations sur le film:', error);
     return null;
   }
 };
-
 // export const getMovieVideos = async (movieId) => {
 //   try {
 //     const response = await tmdbApi.get(`movie/${movieId}/videos`, {
