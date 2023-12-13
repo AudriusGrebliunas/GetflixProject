@@ -126,7 +126,7 @@ include 'navbar.php';
                         '<td><a href="' + row['link_yt'] + '" target="_blank">' + row['link_yt'] + '</a></td>' +
                         '<td><a href="' + row['image'] + '" target="_blank">' + row['image'] + '</a></td>' +
                         '<td class="action-buttons" style="width: 200px"><button class="btn btn-primary btn-sm" onclick="populateModal(\'' + row['id'] + '\')"><i class="fas fa-edit"></i> Edit</button>' +
-                        '<button class="btn btn-danger btn-sm" onclick="deleteMovie(\'' + row['id'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
+                        '<button class="btn btn-danger btn-sm" onclick="deleteRow(\'' + row['id'] + '\')"><i class="fas fa-trash-alt"></i> Delete</button></td>';
                     tbody.appendChild(tr);
                 });
             })
