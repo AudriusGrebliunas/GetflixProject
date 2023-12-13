@@ -5,25 +5,23 @@
 include 'navbar.php';
 ?>
 
-<div class="container mt-3">
-    <div class="input-group">
-        <input id="searchInput" type="text" class="form-control" placeholder="Search...">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
-        </div>
-    </div>
-</div>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h2>Add Movie</h2>
         </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <input id="searchInput" type="text" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
+                </div>
+            </div>
+        </div>
 
-        <div class="col-md-6 ms-auto">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addManuallyModal">Add
-                Manually</button>
-
+        <div class="col-md-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addManuallyModal">Add Manually</button>
+        </div>
             <div class="modal fade" id="addManuallyModal" tabindex="-1" aria-labelledby="addManuallyModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">

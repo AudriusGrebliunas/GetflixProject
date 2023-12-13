@@ -65,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo createResponse("200", "Successfully added movie", $data);
                 } catch (PDOException $e) {
                     error_log("Database Error: ".$e->getMessage());
-                    echo createResponse("500", "Internal Server Error", []);
+                    echo createResponse("500", "Internal Server Error", $data);
                     exit;
                 }
             }
