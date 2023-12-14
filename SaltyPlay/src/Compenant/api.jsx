@@ -77,20 +77,61 @@ export const getMoviesInfo = async () => {
   }
 };
 
+// ASYNC AWAIT
 
-export const userLogin = async (email, password) => {
-  try {
-    const response = await apiDB.post(`user/login.php`, {
-        "email": email,
-        "password": password
-    });
-  let userLogin = response.data.data;
-  console.log(userLogin);
-  return userLogin;
-} catch (error) {
-  console.error('Erreur lors du log-in', error);
-  return null;
-}
-};
+export const fetchJoke = async (email, password) => {
+    const datas = {
+      email: email, 
+      password: password
+    }
+    try {
+      const response = await fetch('https://saltybecode2.000webhostapp.com/user/login.php', {
+        method: 'POST',
+        body: JSON.stringify(datas)
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+
+
+// PUT
+// const joke = {
+//   setup: 'Why did the chicken cross the road?',
+//   punchline: 'To get to the other side!'
+// };
+// const options = {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'X-RapidAPI-Key': 'your-api-key',
+//     'X-RapidAPI-Host': 'jokes-by-api-ninjas.p.rapidapi.com',
+//   },
+//   body: JSON.stringify(joke)
+// };
+// fetch('https://jokes-by-api-ninjas.p.rapidapi.com/v1/jokes', options)
+//   .then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(error => console.error(error));
+// //   try {
+//     const response = await apiDB.post(`user/login.php`, {
+//         "email": email,
+//         "password": password
+//     });
+//   let userLogin = response.data.data;
+//   console.log(userLogin);
+//   return userLogin;
+// } catch (error) {
+//   console.error('Erreur lors du log-in', error);
+//   return null;
+// }
+//};
+
 
 

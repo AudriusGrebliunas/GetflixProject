@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Form</title>
 </head>
+
 <body>
 
   <h2>Login</h2>
@@ -23,30 +25,42 @@
     <button type="button" onclick="login()">Login</button>
   </form>
 
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    function login() {
+    async function login() {
       // Get form data
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      // Make a POST request using Axios
-      axios.post('https://saltybecode2.000webhostapp.com/user/login.php', {
+      // Make a POST request using fetch
+      const data = {
         email: email,
         password: password
-      })
-      .then(function (response) {
-        // Handle success
-        console.log(response.data);
+      };
+
+      try {
+        const response = await fetch('https://saltybecode2.000webhostapp.com/user/login.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData);
         // You can redirect to another page or perform other actions upon successful login
-      })
-      .catch(function (error) {
+      } catch (error) {
         // Handle error
-        console.error(error);
+        console.error('Error:', error);
         // You can display an error message to the user or perform other actions on login failure
-      });
+      }
     }
   </script>
 
 </body>
+
 </html>
