@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function profile() {
   return (
-    <div className="min-h-screen flex items-center justify-center py-[100px] bg-gray-700">
+    <div className="min-h-screen flex items-center justify-center py-[100px] bg-gray-800">
       <form className="w-full max-w-lg">
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">

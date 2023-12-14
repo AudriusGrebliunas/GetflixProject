@@ -51,10 +51,10 @@ export default function Categorie() {
   };
 
   return (
-    <div className='bg-gray-700'>
+    <div className='bg-gray-800'>
       <Navbar />
       <div className='w-full flex'>
-        <div className='w-[20%] mt-[150px] flex flex-col gap-[20px] font-semibold text-lg'>
+        <div className='w-[20%] mt-[150px] flex flex-col gap-[20px] font-semibold text-lg text-white'>
           <button value={28} onClick={() => handleMovieClick(28)}>Action</button>
           <button value={35} onClick={() => handleMovieClick(35)}>Comedy</button>
           <button value={16} onClick={() => handleMovieClick(16)}>Animation</button>

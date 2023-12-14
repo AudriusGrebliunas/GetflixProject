@@ -42,13 +42,13 @@ export default function Wishlist() {
   const section3 = movies.slice(14, 21);
 
   return (
-    <div className='bg-gray-700'>
+    <div className='bg-gray-800'>
       <div className='mb-[100px]'>
         <Navbar />
       </div>
 
       <div className='mx-[50px]'>
-        <div className='ml-2 mb-3 text-xl font-semibold'>
+        <div className='ml-2 mb-3 text-xl font-semibold text-white'>
           A regarder
         </div>
         <Slider {...settings}>
@@ -69,7 +69,7 @@ export default function Wishlist() {
       </div>
 
       <div className='mx-[50px] mt-[80px]'>
-        <div className='ml-2 mb-3 text-xl font-semibold'>
+        <div className='ml-2 mb-3 text-xl font-semibold  text-white'>
           En cours
         </div>
         <Slider {...settings}>
@@ -90,7 +90,7 @@ export default function Wishlist() {
       </div>
 
       <div className='mx-[50px] mt-[80px] pb-[80px]'>
-        <div className='ml-2 mb-3 text-xl font-semibold'>
+        <div className='ml-2 mb-3 text-xl font-semibold text-white'>
           Fini
         </div>
         <Slider {...settings}>

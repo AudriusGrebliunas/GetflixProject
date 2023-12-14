@@ -56,7 +56,7 @@ const Navbar = () => {
             Ma Liste
           </a>
         </div>
-        <div className="text-4xl font-bold">SALTY</div>
+        <div className="text-4xl font-bold text-white">SALTY</div>
         <div className="flex space-x-4 items-center">
           <div className="relative">
             <input
