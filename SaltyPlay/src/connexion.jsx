@@ -2,37 +2,30 @@ import React, { useState } from 'react';
 import './App.css';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
+import { userLogin } from "./Compenant/api.jsx"
 
 const ConnexionPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async (event) => {
-    event.preventDefault();
+  userLogin('gwendolinejacobs1@gmail.com','Caca1980');
+  // const handleRegister = async (event) => {
+  //   event.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost/back-end/user/login.php', {
-        email: email,
-        password: password,
-      });
-
-      
-      console.log(response.data);
-
-    } catch (error) {
-      console.error('Erreur lors de la connexion:', error);
-    }
-  };
-
+  // };
+  // function userLogin2(email,password) {
+  //   userLogin(email,password);
+  //   console.log(userLogin);
+  // }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800">
       <div className="text-7xl font-bold text-white mb-8">SALTY</div>
-      <form onSubmit={handleRegister} className="w-full max-w-xs">
+      <form className="w-full max-w-xs">
         <input
           type="email"
           name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          // value={email}
+          // onChange={(e) => setEmail(e.target.value)}
           className="bg-gray-700 text-white rounded py-3 px-4 mb-3 w-full"
           placeholder="Email"
           required
@@ -40,8 +33,8 @@ const ConnexionPage = () => {
         <input
           type="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          // value={password}
+          // onChange={(e) => setPassword(e.target.value)}
           className="bg-gray-700 text-white rounded py-3 px-4 mb-3 w-full"
           placeholder="Password"
           required

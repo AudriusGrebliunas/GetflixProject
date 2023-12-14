@@ -76,3 +76,21 @@ export const getMoviesInfo = async () => {
     return null;
   }
 };
+
+
+export const userLogin = async (email, password) => {
+  try {
+    const response = await apiDB.post(`user/login.php`, {
+        "email": email,
+        "password": password
+    });
+  let userLogin = response.data.data;
+  console.log(userLogin);
+  return userLogin;
+} catch (error) {
+  console.error('Erreur lors du log-in', error);
+  return null;
+}
+};
+
+
