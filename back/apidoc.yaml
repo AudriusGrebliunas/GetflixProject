@@ -1,0 +1,940 @@
+openapi: 3.0.3
+info:
+  title: Salty project
+  version: 1.0.11
+  description: >-
+    This is an API who aims to implement a login/register system, fonctionnality about movies, a wishlist system and a rating
+  contact:
+    email: gwendolinejacobs1@gmail.com
+    name: Gwendoline Jacobs - Audrius Grebliunas
+    url: https://github.com/AudriusGrebliunas/GetflixProject
+externalDocs:
+  description: Find out more about our project!
+  url: https://github.com/AudriusGrebliunas/GetflixProject
+servers:
+  - url: https://saltybecode2.000webhostapp.com
+tags:
+  - name: user
+    description: Operations about user
+  - name: movies
+    description: All you need to do about movies
+  - name: wishlist
+    description: >-
+      A wishlist of the user allowing him to put movies in three different
+      category : want to watch, ongoing, finished.
+  - name: ratings
+    description: A rating of the user about a movie
+paths:
+  /user/register.php:
+    post:
+      tags:
+        - user
+      summary: Create a new user
+      description: Add a user to the database
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successfully registered
+        '401':
+          description: Data Missing
+        '420':
+          description: Email already in use. Try to use Login page if you're already registered.
+        '500':
+          description: Internal Server Error
+  /user/login.php:
+    summary: Log in an existing user
+    description: Log in a user by checking his email/password combination
+    post:
+      summary: Log in an existing user by checking his email/password combination
+      description: ''
+      operationId: logIn
+      requestBody:
+        description: Email and password
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email address
+                password:
+                  type: string
+                  description: User's password
+      responses:
+        '200':
+          description: Log in Successfull
+        '401':
+          description: Email or password missing
+        '403':
+          description: No Login/Password combinaison found, Are you registered?
+        '469':
+          description: Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.
+        '500':
+          description: Error server
+      tags:
+        - user
+  /user/userProfiles.php:
+    get:
+      tags:
+        - user
+      summary: Get all users
+      description: ''
+      operationId: getUsers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request
+        '404':
+          description: Users not found
+  /user/userProfile.php:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: email
+          in: query
+          description: The name that needs to be fetched. Use user1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithId'
+        '401':
+          description: Data missing
+        '405':
+          description: User not found
+        '501':
+          description: Internal Server Error
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged-in user.
+      operationId: deleteUser
+      parameters:
+        - name: email
+          in: query
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account scheduled for deletion
+        '402':
+          description: Data missing
+        '420':
+          description: Profile doesn't exist
+        '502':
+          description: Internal Server Error
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: This can only be done by the logged-in user.
+      operationId: updateUser
+      requestBody:
+        description: Created user object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successfully modified user data
+        '421':
+          description: Profile doesn't exist
+        '403':
+          description: Data missing
+        '503':
+          description: Internal Server Error
+  /user/passwordEdit.php:
+    put:
+      tags:
+        - user
+      summary: Edit password
+      description: Change password when password forgotten
+      operationId: updatePassword
+      requestBody:
+        description: Created user object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+               password:
+                type: string
+                description: the new password
+               email:
+                type: string
+                description: Email of the user who wants to change password
+      responses:
+        '200':
+          description: Successfully modified user data
+        '403':
+          description: Please enter a new password
+        '503':
+          description: Internal Server Error
+  /user/secretQuestion.php:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: checkSecretQuestionAnswer
+      parameters:
+        - name: email
+          in: query
+          description: The email that needs to be fetched. Use user1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SUCCESS.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithId'
+        '400':
+          description: Wrong Answer, try to check the case
+
+        '500':
+          description: Internal Server Error
+  /movies/add.php:
+    post:
+      tags:
+        - movies
+      summary: Create a new movie
+      description: Add a movie to the database
+      operationId: createMovie
+      requestBody:
+        description: Created movie object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '200':
+          description: Successfully added movie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieWithId'
+        '401':
+          description: Data Missing
+        '500':
+          description: Internal Server Error
+  /movies/getBO.php:
+    get:
+      tags:
+        - movies
+      summary: Get movie by Moviename from MovieDB & DB 
+      description: ''
+      operationId: getMovieFromMDB
+      parameters:
+        - name: q
+          in: query
+          description: The name that needs to be fetched. Use movie1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'SUCCESS: Movie(s) successfully retrieved'
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/Movie'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
+  /movies/getAllMovies.php:
+    get:
+      tags:
+        - movies
+      summary: Get all movies
+      description: ''
+      operationId: getMovies
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieWithId'
+        '400':
+          description: Invalid request
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal Error Server
+  /movies/getAllMoviesByGenre.php:
+    get:
+      tags:
+        - movies
+      summary: Get movie by genre 
+      description: ''
+      operationId: getMovieByGenre
+      parameters:
+        - name: selectedGenre
+          in: query
+          description: The id that needs to be fetched.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'SUCCESS: Movie(s) successfully retrieved'
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/MovieWithId'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
+  /movies/movie.php:
+    get:
+      tags:
+        - movies
+      summary: Get movie by Moviename
+      description: ''
+      operationId: getMovieByName
+      parameters:
+        - name: q
+          in: query
+          description: The name that needs to be fetched. Use movie1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'SUCCESS: Movie(s) successfully retrieved'
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                $ref: '#/components/schemas/MovieWithId'
+        '401':
+          description: 'ERROR: No movie(s) found with that name'
+        '500':
+          description: 'FAILURE: Internal Server Error'
+    put:
+      tags:
+        - movies
+      summary: Update movie
+      description: This can only be done by the admin.
+      operationId: updateMovie
+      parameters:
+        - name: movieId
+          in: query
+          description: Name that needs to be updated
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: body
+          description: Updated user object
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+      responses:
+        '201':
+          description: "SUCCESS: Movie successfully updated"
+          content:
+           application/json:
+            schema:
+             type: object
+             properties:
+              id:
+               type: integer 
+               description: id of the movie
+        '402':
+          description: "ERROR: Movie not found"
+        '501':
+          description: "FAILURE: Internal Server Error"
+    delete:
+      tags:
+        - movies
+      summary: Delete movie
+      description: This can only be done by the Admin.
+      operationId: deleteMovie
+      parameters:
+        - name: movieId
+          in: query
+          description: The movie that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: 'SUCCESS: Movie successfully deleted'
+        '403':
+          description: "ERROR: Invalid Moviename provided"
+        '404':
+          description: 'ERROR: Movie not found'
+        '502':
+          description: 'FAILURE: Internal error' 
+  /wishlist/add.php:
+    post:
+      tags:
+        - wishlist
+      summary: Add a new item to wishlist
+      description: Add a new item on wishlist to the database
+      operationId: createWishlist
+      requestBody:
+        description: Created wishlist object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  format: 0, 1, 2, 3
+                  description: >-
+                    0 for not in the list, 1 for want, 2 for ongoing, 3 for
+                    finished
+                name:
+                  type: string
+                  description: name of the movie
+                email:
+                  type: string
+                  description: email of the user
+      responses:
+        '200':
+          description: 'Successfully added to wishlist'
+        '401':
+          description: Data Missing
+        '500':
+          description: Internal Server Error
+  /wishlist/wishlist.php:
+    get:
+      tags:
+        - wishlist
+      summary: Get wishlist by User
+      description: ''
+      operationId: getWishlistByUser
+      parameters:
+        - name: email
+          in: query
+          description: >-
+            The user email that needs to be fetched. Use email@example.com for
+            testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    status:
+                      type: string
+                      description: The status on the wishlist
+                    email:
+                     type: string
+                     description: User email
+        '400':
+          description: No email submited
+        '401':
+          description: Your email doesn't exist
+        '500':
+          description: Internal server error
+  /wishlist/modifyWishlist.php:
+    put:
+      tags:
+        - wishlist
+      summary: Update wishlist
+      description: This can only be done by the logged in user.
+      operationId: updateWishlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wishlist'
+      responses:
+        '200':
+          description: >-
+            Wishlist updated ! Your {movie} is correctly added to your
+            {wishlist.status}
+        '400':
+          description: No movie with that user was found in the wishlist
+        '404':
+          description: Movie not found
+  /wishlist/deleteFromWishlist.php:
+    delete:
+      tags:
+        - wishlist
+      summary: Delete from wishlist
+      description: This can only be done by the logged-in user.
+      operationId: deleteFromWishlist
+      parameters:
+        - name: name
+          in: query
+          description: Name of the movie to be removed from the wishlist.
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: Email of the user requesting the deletion.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The {movie} was correctly removed from the wishlist.
+        '400':
+          description: Invalid movie or email supplied
+        '404':
+          description: Movie not found
+  /rating/add:
+    summary: Add, get, update or delete a rating from a user on a movie
+    post:
+      summary: Add a rating to the database
+      description: ''
+      operationId: addRating
+      requestBody:
+        description: Created wishlist object
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Rating'
+      responses:
+        '200':
+          description: Your rating is correctly added.
+        '400':
+          description: Invalid movie or email supplied
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/{movieName}.php:
+    summary: Get a movie rating from the db
+    get:
+      summary: Get a movie rating from the db
+      description: ''
+      operationId: movieRating
+      parameters:
+        - name: movieName
+          in: path
+          description: The name of the movie you want to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie correctly fetched
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  format: "Movie Name"
+                  description: Name of the movie
+                rating:
+                  type: number
+                  description: Global rating of the movie
+        '400':
+          description: Invalid movie supplied
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/{userEmail}.php:
+    summary: Get all user ratings from the db
+    get:
+      summary: Get all user rating from the db
+      description: ''
+      operationId: userRating
+      parameters:
+        - name: userEmail
+          in: path
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User correctly fetched
+          content:
+            application/json:
+             schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/userMovieRating.php:
+    summary: Get a single rating from a movie for a defined user
+    get:
+      summary: Get a single rating from a movie for a defined user
+      description: ''
+      operationId: userMovieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The movie name of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User correctly fetched
+          content:
+            application/json:
+             schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/updateMovieRating.php:
+    summary: Update a movie rating for a user 
+    put:
+      summary: Update a movie rating for a user 
+      description: ''
+      operationId: updateMovieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The movie name of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: The new rating of the user
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Movie rating updated !
+          content:
+            application/json:
+             schema:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movie
+                    rating:
+                      type: number
+                      description: The rating provided for the movie
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+  /rating/deleteMovieRating.php:
+    summary: Delete a movie rating for a user 
+    delete:
+      summary: Delete a movie rating for a user 
+      description: ''
+      operationId: deleteMovieRating
+      parameters:
+        - name: email
+          in: query
+          description: The email of the user's ratings
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: The movie name of the user's ratings
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie rating deleted !
+        '400':
+          description: No rating found for that user
+        '500':
+          description: Internal server error
+      tags:
+        - ratings
+components:
+  schemas:
+    UserWithId:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: The user's ID.
+      xml:
+        name: userWithId
+
+    MovieWithId:
+      allOf:
+        - $ref: '#/components/schemas/Movie'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: The movie's ID.
+      xml:
+        name: movieWithId
+
+    UserWithQuestion:
+        allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            question:
+              type: string
+              description: Secret question id
+            questionanswer:
+              type: string
+              description: Secret question answer
+
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: James
+        email:
+          type: string
+          example: example@gmail.com
+        address:
+          type: string
+          example: 27, rue de l'exemple, 5900 exemple
+        dob:
+          type: integer
+          description: Date of Birth
+          format: date
+          example: '2012-04-23T18:25:43.511Z'
+        password:
+          type: string
+          example: 12345%+de
+      xml:
+        name: user
+
+    Movie:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Petit Poney
+          description: The name of the movie
+        author:
+          type: string
+          example: L'Auteur fou
+          description: The author of the movie
+        resume:
+          type: string
+          example: C'est l'histoire d'un poney
+          description: A brief summary of the movie
+        year:
+          type: integer
+          example: 2002
+          description: The year of release
+        link_yt:
+          type: string
+          example: https://www.youtube.com/trailer
+          description: The YouTube trailer link
+        image:
+          type: string
+          example: https://www.urldemonimage.com/lien
+          description: The URL of the movie's image
+        genre:
+          $ref: '#/components/parameters/GenreParameter'
+      required:
+        - name
+      xml:
+        name: movie
+
+    Wishlist:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        name:
+          type: string
+          example: Nom du film
+        Status:
+          type: integer
+          example: 1
+      xml:
+        name: wishlist
+    Rating:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        name:
+          type: string
+          example: Nom du film
+        rating:
+          type: number
+          example: 4.5
+
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: tag
+
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+  parameters:
+   GenreParameter:
+    name: genre
+    in: query
+    description: The genre of the movie
+    required: true
+    schema:
+      type: array
+      items:
+        type: integer
+        oneOf:
+          - const: "28"
+            description: "Action"
+          - const: "12"
+            description: "Adventure"
+          - const: "16"
+            description: "Animation"
+          - const: "35"
+            description: "Comedy"
+          - const: "80"
+            description: "Crime"
+          - const: "99"
+            description: "Documentary"
+          - const: "18"
+            description: "Drama"
+          - const: "10751"
+            description: "Family"
+          - const: "14"
+            description: "Fantasy"
+          - const: "36"
+            description: "History"
+          - const: "27"
+            description: "Horror"
+          - const: "10402"
+            description: "Music"
+          - const: "9648"
+            description: "Mystery"
+          - const: "10749"
+            description: "Romance"
+          - const: "878"
+            description: "Science Fiction"
+          - const: "10770"
+            description: "TV Movie"
+          - const: "53"
+            description: "Thriller"
+          - const: "10752"
+            description: "War"
+          - const: "37"
+            description: "Western"
+         
