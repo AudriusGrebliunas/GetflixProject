@@ -4,8 +4,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import Connexion from './connexion'
-import Register from './register'
+import Connexion from './connexion';
+import Profile from './profile';
+import Register from './register';
 import Wishlist from './wishlist';
 import ConnexionPage from './connexion';
 import CategoryPage from './categorie';
@@ -21,13 +22,13 @@ export default function App() {
       element: <ConnexionPage />
     },
     {
-      path: "register",
-      element: <Register />
+      path: "wishlist",
+      element: <Wishlist />
     }
     ,
     {
-      path: "wishlist",
-      element: <Wishlist />
+      path: "register",
+      element: <Register />
     }
     ,
     {
@@ -48,6 +49,10 @@ export default function App() {
     {
       path: "SecretQuestion",
       element: <SecretQuestion />
+    },
+    {
+      path: "profile",
+      element: <Profile />
     }
   ]);
   

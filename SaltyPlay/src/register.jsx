@@ -41,6 +41,20 @@ return (
             />
             </div>
         </div>
+        <div class="flex flex-wrap -mx-1 mb-6">
+            <label
+                class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                for="grid-mail"
+            >
+                E-mail
+            </label>
+            <input
+                class="appearance-none block w-full bg-gray-200 text-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-mail"
+                type="text"
+                placeholder="incognito@gmail.com"
+            />
+            </div>
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
             <label
@@ -55,13 +69,10 @@ return (
                 type="password"
                 placeholder="******************"
             />
-            <p class="text-gray-600 text-xs italic">
-                Make it as long and as crazy as you'd like
-            </p>
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
                 class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
                 for="grid-city"
@@ -75,32 +86,18 @@ return (
                 placeholder="Av. Stallingrad"
             />
             </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
                 class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                for="grid-city"
+                for="grid-dob"
             >
-                E-mail
-            </label>
-            <input
-                class="appearance-none block w-full bg-gray-200 text-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-city"
-                type="text"
-                placeholder="incognito@gmail.com"
-            />
-            </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label
-                class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
-                for="grid-zip"
-            >
-                Zip
+                Date of Birth
             </label>
             <input
                 class="appearance-none block w-full bg-gray-200 tex-black border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-zip"
+                id="grid-dob"
                 type="text"
-                placeholder="Date of Birth format DD/MM/YYYY"
+                placeholder="DD/MM/YYYY"
             />
             </div>
         </div>
@@ -117,9 +114,11 @@ return (
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state"
                     >
-                        <option>New Mexico</option>
-                        <option>Missouri</option>
-                        <option>Texas</option>
+                        <option>Quelle est la ville où vous êtes né(e)?</option>
+                        <option>Quel est votre film préféré?</option>
+                        <option>Quel est le nom de votre premier animal de compagnie?</option>
+                        <option>Quelle est votre couleur préférée?</option>
+                        <option>Quel est votre plat préféré?</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 tex-black">
                         <svg
@@ -143,9 +142,8 @@ return (
               </label>
               <input
                 class="appearance-none block w-full bg-gray-200 tex-black border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-password"
-                type="password"
-                placeholder="******************"
+                id="Secret Answer"
+                placeholder=""
               />
             </div>
          </div>

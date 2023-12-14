@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+
 
 const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -45,7 +47,7 @@ const Navbar = () => {
             Home
           </a>
           <a href="./categorie.jsx" className="text-gray-300 hover:text-white">
-            Categories
+            <Link to="/categorie">Catégorie</Link>
           </a>
           <a href="#" className="text-gray-300 hover:text-white">
             Nouveautés
@@ -59,14 +61,13 @@ const Navbar = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Rechercher des films..."
               className="p-2 pr-8 border border-gray-500 rounded"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={handleKeyPress}
             />
             <button
-              className="absolute top-0 right-0 p-2 bg-gray-500 text-white rounded"
+              className="absolute top-0 right-0 bg-gray-500 text-white rounded h-[42px] px-[10px] text-sm"
               onClick={handleSearch}
             >
               Rechercher
