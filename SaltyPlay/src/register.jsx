@@ -4,14 +4,14 @@ export default function Register() {
 return (
     <div className="h-screen w-screen bg-gray-800">
     <div className="h-[20%] w-full flex justify-center items-center">
-        <p className="text-7xl font-bold tex-black mb-8">SALTY</p>
+        <p className="text-7xl font-bold tex-black text-white mb-8">SALTY</p>
     </div>
     <div className="h-[80%] w-full flex justify-center items-center">
         <form class="w-full max-w-lg">
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
-                class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                class="block uppercase tracking-wide tex-black text-white text-xs font-bold mb-2"
                 for="grid-first-name"
             >
                 First Name
@@ -28,7 +28,7 @@ return (
             </div>
             <div class="w-full md:w-1/2 px-3">
             <label
-                class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                class="block uppercase tracking-wide tex-black text-xs font-bold text-white mb-2"
                 for="grid-last-name"
             >
                 Last Name
@@ -58,7 +58,7 @@ return (
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
             <label
-                class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                class="block uppercase tracking-wide tex-black text-xs font-bold text-white mb-2"
                 for="grid-password"
             >
                 Password
@@ -74,7 +74,7 @@ return (
         <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
-                class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                class="block uppercase tracking-wide tex-black text-xs font-bold text-white mb-2"
                 for="grid-city"
             >
                 Adress
@@ -104,14 +104,14 @@ return (
         <div className="w-full h-12 mt-5">
             <div class="w-full px-3 mb-6">
                 <label
-                    class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                    class="block uppercase tracking-wide tex-black text-xs text-white font-bold mb-2"
                     for="grid-state"
                 >
                     Secret Question
                 </label>
                 <div class="relative">
                     <select
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-500 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state"
                     >
                         <option>Quelle est la ville où vous êtes né(e)?</option>
@@ -120,7 +120,7 @@ return (
                         <option>Quelle est votre couleur préférée?</option>
                         <option>Quel est votre plat préféré?</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 tex-black">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
                         <svg
                             class="fill-current h-4 w-4"
                             xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +135,7 @@ return (
         <div class="flex flex-wrap mt-[40px] mx-1">
             <div class="w-full px-3">
               <label
-                class="block uppercase tracking-wide tex-black text-xs font-bold mb-2"
+                class="block uppercase tracking-wide tex-black text-xs font-bold text-white mb-2"
                 for="grid-password"
               >
                 Answer
