@@ -79,13 +79,13 @@ export const getMoviesInfo = async () => {
 
 // ASYNC AWAIT
 
-export const fetchJoke = async (email, password) => {
+export const checkLogin = async (email, password) => {
     const datas = {
       email: email, 
       password: password
     }
     try {
-      const response = await fetch('https://saltybecode2.000webhostapp.com/user/login.php', {
+      const response = await fetch('http://localhost/user/login.php', {
         method: 'POST',
         body: JSON.stringify(datas)
       });
@@ -99,6 +99,33 @@ export const fetchJoke = async (email, password) => {
     }
   }
 
+  export const postRegister = async (first_name, last_name, email, password, address, dob, question, questionAnswer) => {
+    const datas = {
+      email: email, 
+      password: password,
+      first_name: first_name,
+      last_name: last_name,
+      password: password,
+      address: address,
+      dob: dob,
+      question: question,
+      questionAnswer: questionAnswer 
+      
+    }
+    try {
+      const response = await fetch('http://localhost/user/register.php', {
+        method: 'POST',
+        body: JSON.stringify(datas)
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
 
 // PUT

@@ -30,19 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         $queryLogIn->execute(["email" => $email]);
     } catch (PDOException $e) {
-       echo createResponse ("500", "Error Server", []);
-       exit;
+        echo createResponse("500", "Error Server", []);
+        exit;
     }
 
     $loginRow = $queryLogIn->fetch(PDO::FETCH_ASSOC);
-    if ( password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "0") {
-        echo createResponse("200", "Log In Successfull", $data);
-    } 
-    else if (password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "1") {
-        echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
-    } 
-    
-    else {
+    if ($loginRow && password_verify($password, $loginRow["password"])) {
+        if ($loginRow["deleted"] == "0") {
+            echo createResponse("200", "Log In Successfull", $data);
+        } else if ($loginRow["deleted"] == "1") {
+            echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
+        }
+    } else {
         echo createResponse("403", "No Login/Password combinaison found, Are you registered ?", $data);
         exit;
     }
