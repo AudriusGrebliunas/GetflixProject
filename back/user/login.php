@@ -12,10 +12,9 @@ function createResponse($status, $message, $data = [])
     return json_encode($response);
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
     if ($data) {
         $email = isset($data['email']) ? $data['email'] : '';
         $password = isset($data['password']) ? $data['password'] : '';
@@ -35,15 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $loginRow = $queryLogIn->fetch(PDO::FETCH_ASSOC);
-    if ( password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "0") {
-        echo createResponse("200", "Log In Successfull", $data);
-    } 
-    else if (password_verify($password, $loginRow["password"]) && $loginRow["deleted"] == "1") {
-        echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
-    } 
-    
-    else {
-        echo createResponse("403", "No Login/Password combinaison found, Are you registered ?", $data);
+    if ($loginRow && password_verify($password, $loginRow["password"])) {
+        if ($loginRow["deleted"] == "0") {
+            echo createResponse("200", "Log In Successful", $data);
+        } elseif ($loginRow["deleted"] == "1") {
+            echo createResponse("469", "Your account has been scheduled for deletion. You will be unable to create a new account with the same e-mail password.", $data);
+        }
+    } else {
+        echo createResponse("403", "No Login/Password combination found, Are you registered ?", $data);
         exit;
     }
 }
