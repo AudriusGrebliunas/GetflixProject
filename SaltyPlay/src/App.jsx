@@ -20,7 +20,7 @@ export default function App() {
     {
       path: "/",
       element: <ConnexionPage />
-    },
+     },
     {
       path: "wishlist",
       element: <Wishlist />

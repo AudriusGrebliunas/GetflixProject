@@ -6,10 +6,11 @@ import Navbar from './Compenant/navbar';
 import Modal from './Compenant/Modal'; 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { getMoviesInfo } from './Compenant/api';
 
 export default function Wishlist() {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
@@ -20,12 +21,16 @@ export default function Wishlist() {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    const fetchRandomMovies = async () => {
-      const randomMovies = await getRandomMovies(28);
-      setMovies(randomMovies);
+    const fetchMovies = async () => {
+      try {
+        const moviesInfo = await getMoviesInfo();
+        setMovies(moviesInfo);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des films :', error);
+      }
     };
 
-    fetchRandomMovies();
+    fetchMovies();
   }, []);
 
   const handleMovieClick = (movieId) => {
@@ -39,7 +44,7 @@ export default function Wishlist() {
   const section1 = movies.slice(0, 7);
   const section2 = movies.slice(7, 14);
   const section3 = movies.slice(14, 21);
-  const section4 = movies.slice(0, 7);
+  const section4 = movies.slice(21, 28);
 
   return (
     <div className='bg-gray-800'>
@@ -57,8 +62,8 @@ export default function Wishlist() {
               <div className='h-[400px] mx-1'>
                 <div className='h-full w-full'>
                   <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/w300${movie.image}`}
+                    alt={movie.name}
                     className='w-full h-full object-cover cursor-pointer rounded-xl'
                   />
                 </div>
@@ -78,8 +83,8 @@ export default function Wishlist() {
               <div className='h-[400px] mx-1'>
                 <div className='h-full w-full'>
                   <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/w300${movie.image}`}
+                    alt={movie.name}
                     className='w-full h-full object-cover cursor-pointer rounded-xl'
                   />
                 </div>
@@ -99,8 +104,8 @@ export default function Wishlist() {
               <div className='h-[400px] mx-1'>
                 <div className='h-full w-full'>
                   <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/w300${movie.image}`}
+                    alt={movie.name}
                     className='w-full h-full object-cover cursor-pointer rounded-xl'
                   />
                 </div>
@@ -120,8 +125,8 @@ export default function Wishlist() {
               <div className='h-[400px] mx-1'>
                 <div className='h-full w-full'>
                   <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/w300${movie.image}`}
+                    alt={movie.name}
                     className='w-full h-full object-cover cursor-pointer rounded-xl'
                   />
                 </div>

@@ -1,4 +1,3 @@
-// api.js
 import axios from 'axios';
 
 const apiKey = 'e6469fd4a12ae30bb7b2178e0abf7173';
@@ -60,4 +59,17 @@ const shuffleArray = (array) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+};
+const apiDB = axios.create({
+  baseURL: 'https://saltybecode2.000webhostapp.com/',
+});
+
+export const getMoviesInfo = async () => {
+  try {
+    const response = await apiDB.get(`movies/getAllMovies.php`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des informations sur le film:', error);
+    return null;
+  }
 };
