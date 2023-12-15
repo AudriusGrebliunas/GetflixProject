@@ -3,7 +3,6 @@ import './App.css';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import ForgetPassword from './Forgot-password';
 import Register from './Register';
 
 const ConnexionPage = () => {
