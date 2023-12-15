@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import ForgetPassword from './Forgot-password';
+import Register from './Register';
 
 const ConnexionPage = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +19,6 @@ const ConnexionPage = () => {
         password: password,
       });
 
-      
       console.log(response.data);
 
     } catch (error) {
@@ -53,19 +55,20 @@ const ConnexionPage = () => {
           Login
         </button>
         <button
-          type="submit"
+          type="button" 
           className="bg-gray-600 text-white rounded py-3 px-4 w-full mt-3"
         >
-          Register
+          <Link to="/register">Register</Link>
         </button>
       </form>
       <div className="text-white mt-4">
-        <a href="/forgot-password" className="hover:text-gray-300">
-          mot de passe oublié
-        </a>
+        <Link to="/forgotpassword" className="hover:text-gray-300">
+          Mot de passe oublié
+        </Link>
       </div>
     </div>
   );
 };
 
 export default ConnexionPage;
+

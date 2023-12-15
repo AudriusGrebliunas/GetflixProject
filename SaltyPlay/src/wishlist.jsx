@@ -36,7 +36,6 @@ export default function Wishlist() {
   const handleCloseModal = () => {
     setSelectedMovie(null);
   };
-
   const section1 = movies.slice(0, 7);
   const section2 = movies.slice(7, 14);
   const section3 = movies.slice(14, 21);
