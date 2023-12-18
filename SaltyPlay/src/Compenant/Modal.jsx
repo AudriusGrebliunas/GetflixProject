@@ -12,7 +12,7 @@ const VideoPlayer = ({ youtubeUrl }) => {
   const opts = {
     playerVars: {
       autoplay: 1,
-      controls: 0,
+      controls: 1,
       modestbranding: 1,
       loop: 1,
       playlist: videoId,
